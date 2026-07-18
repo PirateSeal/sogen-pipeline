@@ -7,6 +7,12 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Changed
+
+- Removed client-specific references from the public documentation and project graph.
+
+## [0.1.0] - 2026-07-18
+
 ### Added
 
 - Fastify API for configuring targets, running retained HTTP probes, reporting
@@ -23,4 +29,3 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Latency history uses a fixed one-hour rolling timeline rather than evenly
   redistributing retained samples.
 - Dashboard reliability and metric indicators use the OKLCH semantic palette.
-

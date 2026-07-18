@@ -1,20 +1,13 @@
-# Exercice CI/CD — Société Générale via SII
+# SLO Watch
 
-Ce dossier contient la préparation de l’exercice permettant d’accéder au second entretien.
+SLO Watch is a lightweight monitoring service that measures the availability
+and latency of configured HTTP targets.
 
-> **Important — chrono non démarré :** le dossier n’est volontairement pas encore initialisé comme dépôt Git. Le premier commit déclenche la fenêtre de réalisation de **4 heures maximum**. Ne lancer `git init` et ne créer le premier commit qu’au moment où les quatre heures suivantes sont entièrement disponibles.
+## Documentation
 
-## Échéance
-
-- **Dernier délai : lundi 20 juillet 2026 à 17 h**
-- **Fuseau horaire de référence : America/Toronto**
-- La remise anticipée reste préférable afin de conserver une marge pour les problèmes d’accès ou de déploiement.
-
-## Documents
-
-- [Consignes de l’exercice](docs/EXERCISE_RULES.md) — contraintes confirmées, livrables et critères de réussite.
-- [Exigences d’implémentation](docs/IMPLEMENTATION_REQUIREMENTS.md) — périmètre fonctionnel, CI/CD, sécurité, cloud et plan des quatre heures.
-- [Recherches et décisions d’architecture](docs/ARCHITECTURE_RESEARCH.md) — choix retenus, solutions écartées, coûts et sources officielles.
+- [Project guidelines](docs/EXERCISE_RULES.md) — delivery constraints and acceptance criteria.
+- [Implementation requirements](docs/IMPLEMENTATION_REQUIREMENTS.md) — functional scope, CI/CD, security and cloud design.
+- [Architecture research](docs/ARCHITECTURE_RESEARCH.md) — selected approaches, alternatives and sources.
 
 ## Solution proposée
 

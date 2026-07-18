@@ -1875,19 +1875,19 @@
       "_origin": "ast",
       "id": "readme",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "readme.md"
     },
     {
-      "label": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "label": "SLO Watch Project",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "id": "readme_exercice_ci_cd_slo_watch_project",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
-      "norm_label": "exercice ci/cd \u2014 societe generale via sii"
+      "community_name": "SLO Watch Project",
+      "norm_label": "slo watch project"
     },
     {
       "label": "\u00c9ch\u00e9ance",
@@ -1897,7 +1897,7 @@
       "_origin": "ast",
       "id": "readme_\u00e9ch\u00e9ance",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "echeance"
     },
     {
@@ -1908,7 +1908,7 @@
       "_origin": "ast",
       "id": "readme_documents",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "documents"
     },
     {
@@ -1919,7 +1919,7 @@
       "_origin": "ast",
       "id": "readme_solution_propos\u00e9e",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "solution proposee"
     },
     {
@@ -1930,7 +1930,7 @@
       "_origin": "ast",
       "id": "readme_ci_et_releases",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "ci et releases"
     },
     {
@@ -1941,7 +1941,7 @@
       "_origin": "ast",
       "id": "readme_ex\u00e9cuter_localement",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "executer localement"
     },
     {
@@ -1952,7 +1952,7 @@
       "_origin": "ast",
       "id": "readme_construire_et_ex\u00e9cuter_les_images_docker",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "construire et executer les images docker"
     },
     {
@@ -1963,7 +1963,7 @@
       "_origin": "ast",
       "id": "readme_gate_avant_d\u00e9marrage",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "gate avant demarrage"
     },
     {
@@ -1974,7 +1974,7 @@
       "_origin": "ast",
       "id": "docs_architecture_research",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "architecture_research.md"
     },
     {
@@ -2183,7 +2183,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "exercise_rules.md"
     },
     {
@@ -2194,7 +2194,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_consignes_de_l_exercice",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "consignes de l\u2019exercice"
     },
     {
@@ -2205,7 +2205,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_contraintes_confirm\u00e9es",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "contraintes confirmees"
     },
     {
@@ -2216,7 +2216,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_lecture_des_attentes",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "lecture des attentes"
     },
     {
@@ -2227,7 +2227,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_livrable_attendu",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "livrable attendu"
     },
     {
@@ -2238,7 +2238,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_r\u00e8gles_de_preuve",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "regles de preuve"
     },
     {
@@ -2249,7 +2249,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_d\u00e9finition_de_termin\u00e9",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "definition de \u00ab termine \u00bb"
     },
     {
@@ -2260,7 +2260,7 @@
       "_origin": "ast",
       "id": "docs_exercise_rules_utilisation_responsable_de_l_ia",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "utilisation responsable de l\u2019ia"
     },
     {
@@ -2271,7 +2271,7 @@
       "_origin": "ast",
       "id": "docs_implementation_requirements",
       "community": 11,
-      "community_name": "Exercice CI/CD \u2014 Soci\u00e9t\u00e9 G\u00e9n\u00e9rale via SII",
+      "community_name": "SLO Watch Project",
       "norm_label": "implementation_requirements.md"
     },
     {
@@ -5459,7 +5459,7 @@
       "source_location": "L1",
       "weight": 1.0,
       "source": "readme",
-      "target": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "target": "readme_exercice_ci_cd_slo_watch_project",
       "confidence_score": 1.0
     },
     {
@@ -5468,7 +5468,7 @@
       "source_file": "README.md",
       "source_location": "L40",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_ci_et_releases",
       "confidence_score": 1.0
     },
@@ -5478,7 +5478,7 @@
       "source_file": "README.md",
       "source_location": "L69",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_construire_et_ex\u00e9cuter_les_images_docker",
       "confidence_score": 1.0
     },
@@ -5488,7 +5488,7 @@
       "source_file": "README.md",
       "source_location": "L13",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_documents",
       "confidence_score": 1.0
     },
@@ -5498,7 +5498,7 @@
       "source_file": "README.md",
       "source_location": "L46",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_ex\u00e9cuter_localement",
       "confidence_score": 1.0
     },
@@ -5508,7 +5508,7 @@
       "source_file": "README.md",
       "source_location": "L87",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_gate_avant_d\u00e9marrage",
       "confidence_score": 1.0
     },
@@ -5518,7 +5518,7 @@
       "source_file": "README.md",
       "source_location": "L19",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_solution_propos\u00e9e",
       "confidence_score": 1.0
     },
@@ -5528,7 +5528,7 @@
       "source_file": "README.md",
       "source_location": "L7",
       "weight": 1.0,
-      "source": "readme_exercice_ci_cd_soci\u00e9t\u00e9_g\u00e9n\u00e9rale_via_sii",
+      "source": "readme_exercice_ci_cd_slo_watch_project",
       "target": "readme_\u00e9ch\u00e9ance",
       "confidence_score": 1.0
     },

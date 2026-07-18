@@ -1,4 +1,4 @@
-# Graph Report - sogen-pipeline  (2026-07-18)
+# Graph Report - slo-watch  (2026-07-18)
 
 ## Corpus Check
 - 24 files · ~10,387 words
@@ -25,7 +25,7 @@
 - Cloud and Terraform
 - Runtime Configuration
 - Exercise Constraints
-- Exercice CI/CD — Société Générale via SII
+- SLO Watch Project
 - Recherches et décisions d’architecture
 - 1. Périmètre du produit
 - Décisions Terraform différées
@@ -59,7 +59,7 @@
 4. `Dashboard()` - 12 edges
 5. `Recherches et décisions d’architecture` - 11 edges
 6. `compilerOptions` - 10 edges
-7. `Exercice CI/CD — Société Générale via SII` - 8 edges
+7. `SLO Watch Project` - 8 edges
 8. `AppConfig` - 7 edges
 9. `Consignes de l’exercice` - 7 edges
 10. `loadConfig()` - 6 edges
@@ -114,7 +114,7 @@ Nodes (19): AppDependencies, buildApp(), AppConfig, Environment, loadConfig(), p
 Cohesion: 0.13
 Nodes (22): getHistory(), getJson(), getStatus(), ProbeResult, StatusSnapshot, TargetHistory, TargetSnapshot, TargetState (+14 more)
 
-### Community 11 - "Exercice CI/CD — Société Générale via SII"
+### Community 11 - "SLO Watch Project"
 Cohesion: 0.11
 Nodes (15): Consignes de l’exercice, Contraintes confirmées, Définition de « terminé », Lecture des attentes, Livrable attendu, Règles de preuve, Utilisation responsable de l’IA, CI et releases (+7 more)
 
@@ -138,11 +138,11 @@ Nodes (4): Décisions Terraform différées, Livraison et contrôle, Périmètre
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Exigences d’implémentation` connect `HTTP API and Metrics` to `Exercice CI/CD — Société Générale via SII`, `1. Périmètre du produit`?**
+- **Why does `Exigences d’implémentation` connect `HTTP API and Metrics` to `SLO Watch Project`, `1. Périmètre du produit`?**
   _High betweenness centrality (0.055) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `Development Tooling` to `Runtime Package`?**
   _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **Why does `Recherches et décisions d’architecture` connect `Recherches et décisions d’architecture` to `Exercice CI/CD — Société Générale via SII`?**
+- **Why does `Recherches et décisions d’architecture` connect `Recherches et décisions d’architecture` to `SLO Watch Project`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
   _145 weakly-connected nodes found - possible documentation gaps or missing edges._
