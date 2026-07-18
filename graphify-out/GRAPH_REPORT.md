@@ -1,148 +1,117 @@
-# Graph Report - sogen-pipeline  (2026-07-18)
+# Graph Report - .  (2026-07-18)
 
 ## Corpus Check
-- 37 files · ~13,165 words
-- Verdict: corpus is large enough that graph structure adds value.
+- Corpus is ~14,323 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 282 nodes · 321 edges · 37 communities (13 shown, 24 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
+- 275 nodes · 451 edges · 17 communities (12 shown, 5 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
-## Graph Freshness
-- Built from commit: `a105d5f4`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
-
 ## Community Hubs (Navigation)
-- Runtime Package
-- Development Tooling
-- Monitoring Types
-- TypeScript Configuration
-- HTTP API and Metrics
-- Monitoring Service
-- Product Security and Delivery
-- Cloud and Terraform
-- Runtime Configuration
-- Exercise Constraints
-- SLO Watch Project
-- Recherches et décisions d’architecture
-- 1. Périmètre du produit
-- verify-compose.sh
-- verify-container.sh
-- EKS with Argo CD
-- GitHub Container Registry
-- GitHub Actions AWS OIDC
-- Immutable Image Traceability
-- Definition of Done
-- Monitoring API Endpoints
-- ECS Deployment
-- GitHub Actions Pipeline
-- Runtime Configuration
-- SLO Watch Product Scope
-- SSRF Protections
-- Deferred Terraform Decisions
-- Manual Protected Terraform Apply
-- S3 Remote Terraform State
-- Delivery Pipeline
-- Public GHCR Image
-- In-Memory Measurements
-- Local API Execution
-- TARGETS_JSON
+- API Monitoring Core
+- Production AWS Platform
+- Frontend Tooling
+- Dashboard Data Flow
+- Terraform Bootstrap Security
+- Node Build Configuration
+- Delivery Governance
+- TypeScript Build Settings
+- Local Container Topology
+- Compose Verification
+- Container Verification
+- Bootstrap Provider Lock
+- AWS Platform Rationale
+- Production Provider Lock
 
 ## God Nodes (most connected - your core abstractions)
-1. `MonitorService` - 14 edges
-2. `Exigences d’implémentation` - 14 edges
-3. `scripts` - 13 edges
-4. `Dashboard()` - 12 edges
-5. `Recherches et décisions d’architecture` - 12 edges
-6. `compilerOptions` - 10 edges
-7. `AppConfig` - 7 edges
-8. `SLO Watch` - 7 edges
-9. `Consignes de l’exercice` - 7 edges
-10. `loadConfig()` - 6 edges
+1. `local.tags` - 15 edges
+2. `aws_ecs_service.app` - 14 edges
+3. `var.project_name` - 14 edges
+4. `MonitorService` - 14 edges
+5. `aws_ecs_task_definition.app` - 13 edges
+6. `scripts` - 13 edges
+7. `Dashboard()` - 13 edges
+8. `aws_vpc.main` - 11 edges
+9. `aws_security_group.task` - 10 edges
+10. `compilerOptions` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `createApp()` --calls--> `buildApp()`  [EXTRACTED]
   tests/app.test.ts → src/app.ts
-- `StubProbeClient` --implements--> `ProbeClient`  [EXTRACTED]
-  tests/monitor.test.ts → src/monitor.ts
-- `AppDependencies` --references--> `AppConfig`  [EXTRACTED]
-  src/app.ts → src/config.ts
-- `AppDependencies` --references--> `MonitorService`  [EXTRACTED]
-  src/app.ts → src/monitor.ts
-- `buildApp()` --calls--> `toPrometheusMetrics()`  [EXTRACTED]
-  src/app.ts → src/metrics.ts
+- `Sonar Trivy Dependabot Complementarity` --rationale_for--> `Quality Job`  [INFERRED]
+  docs/ARCHITECTURE_RESEARCH.md → .github/workflows/ci.yml
+- `Sonar Trivy Dependabot Complementarity` --rationale_for--> `Trivy Filesystem Scan Job`  [INFERRED]
+  docs/ARCHITECTURE_RESEARCH.md → .github/workflows/ci.yml
+- `Release Procedure` --references--> `Tagged Release Job`  [EXTRACTED]
+  docs/RELEASE.md → .github/workflows/ci.yml
+- `Production Delivery Pipeline` --conceptually_related_to--> `Tagged Release Job`  [EXTRACTED]
+  README.md → .github/workflows/ci.yml
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **SLO Watch Delivery Flow** — readme_slo_watch, readme_delivery_pipeline, docs_architecture_research_ghcr, docs_architecture_research_ecsfargate, docs_architecture_research_github_oidc [EXTRACTED 1.00]
-- **Monitoring Runtime Contract** — docs_implementation_requirements_slo_watch, docs_implementation_requirements_runtime_configuration, docs_implementation_requirements_api_endpoints, docs_implementation_requirements_ssrf_protections, readme_in_memory_measurements [INFERRED 0.85]
-- **Terraform Delivery Controls** — docs_terraform_decisions_deferred_terraform, docs_terraform_decisions_s3_remote_state, docs_terraform_decisions_manual_apply, docs_implementation_requirements_github_actions_pipeline [EXTRACTED 1.00]
+- **Verified Release Delivery Chain** — github_workflows_ci_quality, github_workflows_ci_trivy_fs, github_workflows_ci_release, github_workflows_ci_immutable_image_deployment, github_workflows_ci_github_aws_oidc [EXTRACTED 1.00]
+- **Terraform Delivery Governance** — github_workflows_terraform_validate, docs_deployment_bootstrap, docs_terraform_decisions_terraform_isolation, docs_implementation_requirements_aws_deployment [INFERRED 0.85]
 
-## Communities (37 total, 24 thin omitted)
+## Communities (17 total, 5 thin omitted)
 
-### Community 0 - "Runtime Package"
-Cohesion: 0.08
-Nodes (23): fastify, dependencies, fastify, description, engines, node, name, private (+15 more)
+### Community 0 - "API Monitoring Core"
+Cohesion: 0.07
+Nodes (30): AppDependencies, buildApp(), AppConfig, Environment, loadConfig(), MonitoredTarget, parseNumber(), parsePositiveInteger() (+22 more)
 
-### Community 1 - "Development Tooling"
+### Community 1 - "Production AWS Platform"
+Cohesion: 0.11
+Nodes (46): aws_acm_certificate.site, aws_acm_certificate_validation.site, aws_cloudwatch_log_group.app, aws_ecs_cluster.main, aws_ecs_service.app, aws_ecs_task_definition.app, aws_iam_role.execution, aws_iam_role_policy_attachment.execution (+38 more)
+
+### Community 2 - "Frontend Tooling"
 Cohesion: 0.05
 Nodes (37): eslint, @eslint/js, jsdom, devDependencies, eslint, @eslint/js, jsdom, react (+29 more)
 
-### Community 2 - "Monitoring Types"
-Cohesion: 0.21
-Nodes (10): MonitoredTarget, FetchProbeClient, MonitorDependencies, ProbeClient, ProbeResult, TargetHistory, TargetSnapshot, TargetState (+2 more)
+### Community 3 - "Dashboard Data Flow"
+Cohesion: 0.11
+Nodes (25): getHistory(), getJson(), getStatus(), ProbeResult, StatusSnapshot, TargetHistory, TargetSnapshot, TargetState (+17 more)
 
-### Community 3 - "TypeScript Configuration"
+### Community 4 - "Terraform Bootstrap Security"
+Cohesion: 0.14
+Nodes (24): aws_iam_openid_connect_provider.github, aws_iam_role.github_terraform, aws_iam_role_policy.github_terraform, aws_kms_alias.state, aws_kms_key.state, aws_s3_bucket_public_access_block.state, aws_s3_bucket_server_side_encryption_configuration.state, aws_s3_bucket.state (+16 more)
+
+### Community 5 - "Node Build Configuration"
+Cohesion: 0.08
+Nodes (23): fastify, dependencies, fastify, description, engines, node, name, private (+15 more)
+
+### Community 6 - "Delivery Governance"
+Cohesion: 0.13
+Nodes (20): Release 1.0.0, Terraform Deployment Permissions, Public GHCR Registry Choice, OIDC Instead of Static AWS Keys, Sonar Trivy Dependabot Complementarity, Terraform Bootstrap, Immutable Digest Rollback, Exercise Delivery Constraints (+12 more)
+
+### Community 7 - "TypeScript Build Settings"
 Cohesion: 0.15
 Nodes (12): src/**/*.ts, compilerOptions, esModuleInterop, forceConsistentCasingInFileNames, module, moduleResolution, outDir, rootDir (+4 more)
 
-### Community 4 - "HTTP API and Metrics"
-Cohesion: 0.05
-Nodes (37): 10. Plan des quatre heures, 11. Plan de commits, 12. Démonstration en deux minutes, 13. Questions de soutenance, 1. Périmètre du produit, 2. Tests et qualité, 3. Image Docker, 4. Pipeline GitHub Actions (+29 more)
-
-### Community 5 - "Monitoring Service"
-Cohesion: 0.10
-Nodes (20): AppDependencies, buildApp(), AppConfig, Environment, loadConfig(), parseNumber(), parsePositiveInteger(), parseTargets() (+12 more)
-
-### Community 8 - "Runtime Configuration"
-Cohesion: 0.13
-Nodes (22): getHistory(), getJson(), getStatus(), ProbeResult, StatusSnapshot, TargetHistory, TargetSnapshot, TargetState (+14 more)
-
-### Community 11 - "SLO Watch Project"
-Cohesion: 0.06
-Nodes (25): Bootstrap unique, Déploiement AWS économique, Livraison, rollback et coût, Consignes de l’exercice, Contraintes confirmées, Définition de « terminé », Lecture des attentes, Livrable attendu (+17 more)
-
-### Community 12 - "Recherches et décisions d’architecture"
-Cohesion: 0.11
-Nodes (19): 1. ECS/Fargate plutôt qu’EKS/Argo CD, 2. GHCR public plutôt qu’ECR ou Docker Hub, 3. OIDC plutôt que des clés AWS statiques, 4. Sonar, Trivy et Dependabot, 5. Pourquoi l’application justifie Trivy, 6. Traçabilité et promotion, 7.1 Coût AWS maîtrisé, 7. Coût hors AWS (+11 more)
-
-### Community 13 - "1. Périmètre du produit"
-Cohesion: 0.22
-Nodes (8): [0.1.0] - 2026-07-18, [0.2.0] - 2026-07-18, Added, Added, Changed, Changed, Changelog, [Unreleased]
+### Community 8 - "Local Container Topology"
+Cohesion: 0.67
+Nodes (4): API Container Service, Web Container Service, Container Compose Topology, Dashboard Application Root
 
 ## Knowledge Gaps
-- **154 isolated node(s):** `name`, `version`, `private`, `description`, `type` (+149 more)
+- **76 isolated node(s):** `provider.registry.terraform.io/hashicorp/aws`, `provider.registry.terraform.io/hashicorp/aws`, `name`, `version`, `private` (+71 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Exigences d’implémentation` connect `HTTP API and Metrics` to `SLO Watch Project`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
-- **Why does `devDependencies` connect `Development Tooling` to `Runtime Package`?**
-  _High betweenness centrality (0.038) - this node is a cross-community bridge._
-- **Why does `Recherches et décisions d’architecture` connect `Recherches et décisions d’architecture` to `SLO Watch Project`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
-- **What connects `name`, `version`, `private` to the rest of the system?**
-  _154 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Runtime Package` be split into smaller, more focused modules?**
-  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
-- **Should `Development Tooling` be split into smaller, more focused modules?**
+- **Why does `devDependencies` connect `Frontend Tooling` to `Node Build Configuration`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+- **What connects `provider.registry.terraform.io/hashicorp/aws`, `provider.registry.terraform.io/hashicorp/aws`, `name` to the rest of the system?**
+  _76 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `API Monitoring Core` be split into smaller, more focused modules?**
+  _Cohesion score 0.0746606334841629 - nodes in this community are weakly interconnected._
+- **Should `Production AWS Platform` be split into smaller, more focused modules?**
+  _Cohesion score 0.1110204081632653 - nodes in this community are weakly interconnected._
+- **Should `Frontend Tooling` be split into smaller, more focused modules?**
   _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
-- **Should `HTTP API and Metrics` be split into smaller, more focused modules?**
-  _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
+- **Should `Dashboard Data Flow` be split into smaller, more focused modules?**
+  _Cohesion score 0.11290322580645161 - nodes in this community are weakly interconnected._
+- **Should `Terraform Bootstrap Security` be split into smaller, more focused modules?**
+  _Cohesion score 0.1402116402116402 - nodes in this community are weakly interconnected._
