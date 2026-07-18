@@ -1,5 +1,10 @@
 # Consignes de l’exercice
 
+> **Release status — 0.2.0:** the application quality and security delivery
+> controls described below are implemented. This document remains the original
+> exercise brief; deferred infrastructure work is recorded separately in
+> [Terraform decisions](TERRAFORM_DECISIONS.md).
+
 ## Contraintes confirmées
 
 | Élément | Exigence |

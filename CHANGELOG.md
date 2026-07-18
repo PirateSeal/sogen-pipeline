@@ -7,15 +7,22 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-18
+
 ### Added
 
 - Dependabot version updates for npm and GitHub Actions, SonarQube Cloud
   quality-gate enforcement, and Trivy scans for the repository and release
   images before publication.
+- A release process that publishes verified API and dashboard images to GHCR
+  from `v*` tags and creates the matching GitHub Release automatically.
 
 ### Changed
 
 - Removed client-specific references from the public documentation and project graph.
+- Updated the delivery toolchain to GitHub Actions v7, ESLint 10, Node.js type
+  definitions 26, and TypeScript 6.0.3. TypeScript 7 is intentionally deferred
+  until the `typescript-eslint` compatibility range supports it.
 
 ## [0.1.0] - 2026-07-18
 

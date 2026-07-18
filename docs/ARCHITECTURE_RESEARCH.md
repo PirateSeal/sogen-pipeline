@@ -1,5 +1,9 @@
 # Recherches et décisions d’architecture
 
+> **Release status — 0.2.0:** the selected GitHub Actions, SonarQube Cloud,
+> Trivy, Dependabot, and GHCR approach is implemented. The ECS/Fargate choice
+> remains an architecture decision for a future infrastructure delivery.
+
 ## Décision synthétique
 
 La solution recommandée est :

@@ -3,13 +3,20 @@
 SLO Watch is a lightweight monitoring service that measures the availability
 and latency of configured HTTP targets.
 
+**Current release:** `0.2.0` (release preparation). The application, quality
+gates, dependency maintenance, and container-release workflow are implemented;
+Terraform and ECS/Fargate deployment remain deliberately out of scope for this
+release.
+
 ## Documentation
 
 - [Project guidelines](docs/EXERCISE_RULES.md) — delivery constraints and acceptance criteria.
 - [Implementation requirements](docs/IMPLEMENTATION_REQUIREMENTS.md) — functional scope, CI/CD, security and cloud design.
 - [Architecture research](docs/ARCHITECTURE_RESEARCH.md) — selected approaches, alternatives and sources.
+- [Release guide](docs/RELEASE.md) — the verified path from `master` to a tagged release.
+- [Terraform decisions](docs/TERRAFORM_DECISIONS.md) — explicitly deferred infrastructure scope.
 
-## Solution proposée
+## Product scope
 
 Construire **SLO Watch**, une petite API TypeScript qui mesure la disponibilité et la latence d’une URL, expose un état synthétique ainsi que des endpoints de santé et de métriques.
 
@@ -30,9 +37,18 @@ L’authentification GitHub vers AWS doit utiliser **OIDC**, sans clé AWS longu
 
 Les images sont publiques dans `ghcr.io/<owner>/slo-watch-api` et `ghcr.io/<owner>/slo-watch-web`. La CI publie avec le `GITHUB_TOKEN` éphémère et les commandes Docker du runner ; elle n’utilise ni identifiant de registre persistant ni action tierce pour la connexion ou le push.
 
-## CI et releases
+## CI and releases
 
-Le workflow [CI](.github/workflows/ci.yml) exécute `lint`, les tests avec couverture et la compilation de l’API et du dashboard sur les pull requests vers `master` ainsi que sur les push vers cette branche. Son résumé GitHub Actions affiche les taux de couverture obtenus. SonarQube Cloud analyse ensuite le code et bloque la chaîne si sa quality gate échoue. Trivy bloque les vulnérabilités `CRITICAL` corrigibles, les secrets ou mauvaises configurations détectés dans le dépôt, puis analyse les deux images finales avant toute publication. Dependabot propose chaque semaine les mises à jour npm et GitHub Actions. Un tag Git `v*` déclenche ensuite la construction de deux images, leur vérification ensemble, leur publication dans GHCR avec les tags de version et de SHA court, puis la création d’une GitHub Release avec notes générées automatiquement. Le résumé de ce job relie le tag, le commit et les quatre références d’image publiées.
+The [CI workflow](.github/workflows/ci.yml) runs linting, coverage tests, and
+production builds for the API and dashboard on pull requests and pushes to
+`master`. SonarQube Cloud then enforces its quality gate. Trivy fails the
+pipeline for fixable `CRITICAL` vulnerabilities, secrets, or misconfigurations
+in the repository and scans both final images before they can be published.
+Dependabot checks npm and GitHub Actions dependencies weekly.
+
+A `v*` Git tag builds and verifies both images, publishes them to GHCR with
+version and short-SHA tags, and creates a GitHub Release with generated notes.
+The job summary links the tag, commit, and all four published image references.
 
 Les actions réutilisées sont les actions GitHub officielles `actions/checkout` et `actions/setup-node`, ainsi que les actions maintenues par SonarSource et Aqua Security pour les analyses de sécurité ; toutes sont épinglées à des SHA immuables. Docker, l’authentification GHCR et la création de release passent par les exécutables natifs du runner (`docker` et `gh`). Si un besoin non couvert apparaît, une action composite locale, minimale et versionnée dans le dépôt sera privilégiée et documentée avec ses entrées, sorties et permissions.
 
@@ -51,7 +67,7 @@ npm run dev
 - `GET /api/targets/<id>/history` retourne les sondes retenues de la dernière heure pour une cible connue ;
 - `GET /metrics` expose les mesures au format Prometheus.
 
-Le dashboard React est en anglais. Dans un second terminal, lancer :
+The React dashboard is in English. In a second terminal, run:
 
 ```bash
 npm run dev:web
@@ -64,8 +80,8 @@ Le dashboard se rafraîchit toutes les 30 secondes et permet de sélectionner un
 ## Construire et exécuter les images Docker
 
 ```bash
-docker build --target api --build-arg APP_VERSION=0.1.0 -t slo-watch-api:0.1.0 .
-docker build --target web --build-arg APP_VERSION=0.1.0 -t slo-watch-web:0.1.0 .
+docker build --target api --build-arg APP_VERSION=0.2.0 -t slo-watch-api:0.2.0 .
+docker build --target web --build-arg APP_VERSION=0.2.0 -t slo-watch-web:0.2.0 .
 npm run test:compose
 ```
 
@@ -76,7 +92,7 @@ Le target `api` utilise un build multi-stage basé sur `node:24-alpine`. Son run
 Pour rejouer la vérification de conteneur après un build local :
 
 ```bash
-npm run test:container -- slo-watch-api:0.1.0
+npm run test:container -- slo-watch-api:0.2.0
 ```
 
 ## Gate avant démarrage

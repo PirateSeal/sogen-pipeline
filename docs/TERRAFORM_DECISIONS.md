@@ -1,5 +1,9 @@
 # Décisions Terraform différées
 
+> **Release status — 0.2.0:** Terraform and ECS/Fargate deployment are not
+> implemented in this release. This document records the constraints for the
+> next infrastructure milestone.
+
 Terraform fera l’objet d’un plan et d’une branche distincts de l’API. Aucun fichier Terraform ni aucune ressource AWS ne sont créés dans le lot `feat/api-monitoring`.
 
 ## Périmètre retenu

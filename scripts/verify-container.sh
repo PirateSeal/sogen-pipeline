@@ -12,7 +12,7 @@ cleanup() {
 trap cleanup EXIT
 
 docker run --detach --name "$container_name" --publish 127.0.0.1::3000 \
-  --env APP_VERSION=0.1.0 \
+  --env APP_VERSION=0.2.0 \
   --env TARGETS_JSON="$targets_json" \
   "$image_tag" >/dev/null
 

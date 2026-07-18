@@ -1,5 +1,10 @@
 # Exigences d’implémentation
 
+> **Implementation status — 0.2.0:** the API, dashboard, container builds,
+> GitHub Actions quality gates, SonarQube Cloud, Trivy, and Dependabot are
+> implemented. ECS/Fargate and Terraform remain documented follow-up work, not
+> delivered infrastructure.
+
 ## 1. Périmètre du produit
 
 ### Application retenue : SLO Watch
