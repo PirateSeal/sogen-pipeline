@@ -12,14 +12,32 @@ resource "aws_s3_bucket" "state" {
 resource "aws_s3_bucket_versioning" "state" {
   bucket = aws_s3_bucket.state.id
 
-  versioning_configuration { status = "Enabled" }
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_kms_key" "state" {
+  description             = "KMS key for the ${local.state_bucket_name} Terraform state bucket"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+}
+
+resource "aws_kms_alias" "state" {
+  name          = "alias/${var.project_name}-terraform-state"
+  target_key_id = aws_kms_key.state.key_id
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "state" {
   bucket = aws_s3_bucket.state.id
 
   rule {
-    apply_server_side_encryption_by_default { sse_algorithm = "AES256" }
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.state.arn
+      sse_algorithm     = "aws:kms"
+    }
+
+    bucket_key_enabled = true
   }
 }
 
@@ -93,6 +111,16 @@ resource "aws_iam_role_policy" "github_terraform" {
         Effect   = "Allow"
         Action   = ["s3:ListBucket"]
         Resource = aws_s3_bucket.state.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "kms:Decrypt",
+          "kms:DescribeKey",
+          "kms:Encrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = aws_kms_key.state.arn
       }
     ]
   })
