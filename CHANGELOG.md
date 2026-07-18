@@ -13,6 +13,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   read the records and change status required to manage DNS safely.
 - Allow creation of only the ECS and Elastic Load Balancing service-linked
   roles required during the first deployment in an AWS account.
+- Ensure those service-linked roles exist idempotently in the release workflow
+  before Terraform creates the ALB and ECS service.
 
 ### Security
 

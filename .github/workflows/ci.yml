@@ -262,6 +262,30 @@ jobs:
           role-to-assume: ${{ vars.AWS_TERRAFORM_ROLE_ARN }}
           aws-region: ca-central-1
 
+      - name: Ensure AWS service-linked roles
+        shell: bash
+        run: |
+          ensure_service_linked_role() {
+            local service_name="$1"
+            local role_name="$2"
+
+            if aws iam get-role --role-name "$role_name" >/dev/null 2>&1; then
+              return
+            fi
+
+            aws iam create-service-linked-role \
+              --aws-service-name "$service_name" \
+              >/dev/null
+            sleep 10
+          }
+
+          ensure_service_linked_role \
+            ecs.amazonaws.com \
+            AWSServiceRoleForECS
+          ensure_service_linked_role \
+            elasticloadbalancing.amazonaws.com \
+            AWSServiceRoleForElasticLoadBalancing
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
         with:

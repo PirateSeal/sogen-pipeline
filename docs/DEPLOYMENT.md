@@ -27,6 +27,11 @@ numériques du propriétaire et du dépôt, et reste limité à cet environnemen
 Si le dépôt est transféré ou recréé, mettre à jour `github_owner_id` et
 `github_repository_id` avant de rejouer le bootstrap.
 
+Lors d'une première livraison dans un compte AWS, la CI crée de façon
+idempotente les rôles liés aux services ECS et Elastic Load Balancing s'ils
+n'existent pas encore. Le rôle OIDC ne peut lire ou créer que ces deux rôles
+AWS prédéfinis.
+
 ## Livraison, rollback et coût
 
 Un tag `v*` publie et signe les images GHCR, génère les SBOM/attestations,

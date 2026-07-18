@@ -147,6 +147,14 @@ resource "aws_iam_role_policy" "github_terraform" {
       },
       {
         Effect = "Allow"
+        Action = "iam:GetRole"
+        Resource = [
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+        ]
+      },
+      {
+        Effect = "Allow"
         Action = "iam:CreateServiceLinkedRole"
         Resource = [
           "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
