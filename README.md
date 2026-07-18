@@ -49,6 +49,8 @@ Dependabot checks npm and GitHub Actions dependencies weekly.
 A `v*` Git tag builds and verifies both images, publishes them to GHCR with
 version and short-SHA tags, and creates a GitHub Release with generated notes.
 The job summary links the tag, commit, and all four published image references.
+The tag workflow relies on the quality gate already passed by the tagged
+`master` commit; it does not submit a duplicate SonarQube Cloud tag analysis.
 
 Les actions réutilisées sont les actions GitHub officielles `actions/checkout` et `actions/setup-node`, ainsi que les actions maintenues par SonarSource et Aqua Security pour les analyses de sécurité ; toutes sont épinglées à des SHA immuables. Docker, l’authentification GHCR et la création de release passent par les exécutables natifs du runner (`docker` et `gh`). Si un besoin non couvert apparaît, une action composite locale, minimale et versionnée dans le dépôt sera privilégiée et documentée avec ses entrées, sorties et permissions.
 
