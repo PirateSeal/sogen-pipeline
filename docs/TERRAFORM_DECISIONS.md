@@ -10,7 +10,7 @@ Terraform fera l’objet d’un plan et d’une branche distincts de l’API. Au
 
 - Le futur périmètre Terraform couvre un réseau AWS complet.
 - ECS/Fargate n’est pas inclus dans la première étape Terraform ; son implémentation sera décidée dans le plan d’infrastructure correspondant.
-- Le front React/Vite est également différé : il consommera ultérieurement l’API existante sans modifier le moniteur serveur.
+- Le front React/Vite est déjà livré dans cette release. L’infrastructure devra l’exposer avec l’API sans modifier le moniteur serveur.
 
 ## État distant
 
