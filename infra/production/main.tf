@@ -54,47 +54,79 @@ resource "aws_security_group" "alb" {
   name   = "${var.project_name}-alb"
   vpc_id = aws_vpc.main.id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   tags = local.tags
+}
+
+resource "aws_vpc_security_group_ingress_rule" "alb_http" {
+  security_group_id = aws_security_group.alb.id
+  description       = "Public HTTP redirected to HTTPS"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  to_port           = 80
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "alb_https" {
+  security_group_id = aws_security_group.alb.id
+  description       = "Public HTTPS entry point"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "alb_to_task" {
+  security_group_id            = aws_security_group.alb.id
+  description                  = "Forward traffic to the dashboard container"
+  referenced_security_group_id = aws_security_group.task.id
+  from_port                    = 80
+  to_port                      = 80
+  ip_protocol                  = "tcp"
 }
 
 resource "aws_security_group" "task" {
   name   = "${var.project_name}-task"
   vpc_id = aws_vpc.main.id
 
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   tags = local.tags
+}
+
+resource "aws_vpc_security_group_ingress_rule" "task_from_alb" {
+  security_group_id            = aws_security_group.task.id
+  description                  = "Dashboard traffic from the ALB only"
+  referenced_security_group_id = aws_security_group.alb.id
+  from_port                    = 80
+  to_port                      = 80
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "task_dns_udp" {
+  security_group_id = aws_security_group.task.id
+  description       = "DNS queries to the VPC resolver"
+  cidr_ipv4         = "${cidrhost(aws_vpc.main.cidr_block, 2)}/32"
+  from_port         = 53
+  to_port           = 53
+  ip_protocol       = "udp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "task_dns_tcp" {
+  security_group_id = aws_security_group.task.id
+  description       = "DNS fallback to the VPC resolver"
+  cidr_ipv4         = "${cidrhost(aws_vpc.main.cidr_block, 2)}/32"
+  from_port         = 53
+  to_port           = 53
+  ip_protocol       = "tcp"
+}
+
+# Public HTTPS egress is required for GHCR, CloudWatch Logs, and the configured external SLO targets.
+#trivy:ignore:AVD-AWS-0104
+resource "aws_vpc_security_group_egress_rule" "task_https" {
+  security_group_id = aws_security_group.task.id
+  description       = "HTTPS access to AWS services, GHCR, and monitored targets"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
 }
 
 resource "aws_acm_certificate" "site" {
@@ -104,7 +136,7 @@ resource "aws_acm_certificate" "site" {
 }
 
 resource "aws_route53_record" "certificate_validation" {
-  for_each = { for option in aws_acm_certificate.site.domain_validation_options : option.resource_record_name => option }
+  for_each = { for option in aws_acm_certificate.site.domain_validation_options : option.domain_name => option }
   zone_id  = data.aws_route53_zone.primary.zone_id
   name     = each.value.resource_record_name
   type     = each.value.resource_record_type
@@ -117,6 +149,8 @@ resource "aws_acm_certificate_validation" "site" {
   validation_record_fqdns = [for record in aws_route53_record.certificate_validation : record.fqdn]
 }
 
+# This is intentionally the public HTTPS entry point for sogen.tcousin.com.
+#trivy:ignore:AVD-AWS-0053
 resource "aws_lb" "site" {
   name                       = "${var.project_name}-public"
   internal                   = false
@@ -224,7 +258,9 @@ resource "aws_ecs_task_definition" "app" {
       healthCheck      = { command = ["CMD-SHELL", "wget --quiet --spider http://127.0.0.1/healthz || exit 1"], interval = 30, timeout = 5, retries = 3, startPeriod = 10 }
     }
   ])
-  tags = local.tags
+
+  depends_on = [aws_iam_role_policy_attachment.execution]
+  tags       = local.tags
 }
 
 resource "aws_ecs_service" "app" {
@@ -247,6 +283,15 @@ resource "aws_ecs_service" "app" {
     container_name   = "web"
     container_port   = 80
   }
+
+  depends_on = [
+    aws_lb_listener.https,
+    aws_vpc_security_group_egress_rule.alb_to_task,
+    aws_vpc_security_group_egress_rule.task_dns_tcp,
+    aws_vpc_security_group_egress_rule.task_dns_udp,
+    aws_vpc_security_group_egress_rule.task_https,
+    aws_vpc_security_group_ingress_rule.task_from_alb,
+  ]
   tags = local.tags
 }
 
