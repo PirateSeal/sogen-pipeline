@@ -11,6 +11,7 @@ export interface ProbeResult {
 }
 
 export interface TargetSnapshot {
+  averageLatencyMs: number | null;
   failureCount: number;
   id: string;
   lastProbe: ProbeResult | null;
@@ -157,10 +158,17 @@ export class MonitorService {
       const lastProbe = targetResults.at(-1) ?? null;
       const successCount = targetResults.filter((result) => result.success).length;
       const failureCount = targetResults.length - successCount;
+      const averageLatencyMs = targetResults.length === 0
+        ? null
+        : Math.round(
+          targetResults.reduce((sum, result) => sum + result.latencyMs, 0)
+            / targetResults.length,
+        );
       const sli =
         targetResults.length === 0 ? null : successCount / targetResults.length;
 
       return {
+        averageLatencyMs,
         failureCount,
         id: target.id,
         lastProbe,

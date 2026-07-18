@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(42% 0.1 155);
+  --color-primary-dark: oklch(34% 0.08 155);
+  --color-primary-subtle: oklch(95% 0.02 155);
+  --color-walnut: oklch(43% 0.055 55);
+  --color-walnut-subtle: oklch(94% 0.016 65);
+  --color-surface: oklch(98% 0.005 95);
+  --color-medium: oklch(65% 0.02 85);
+}
+
+:root {
+  color-scheme: light dark;
+  --dashboard-canvas: oklch(97% 0.012 100);
+  --dashboard-surface: var(--color-surface);
+  --dashboard-surface-raised: oklch(100% 0 0);
+  --dashboard-foreground: oklch(25% 0.025 75);
+  --dashboard-muted: oklch(51% 0.02 85);
+  --dashboard-border: oklch(86% 0.02 90);
+  --dashboard-primary: var(--color-primary);
+  --dashboard-primary-contrast: oklch(99% 0.005 95);
+  --dashboard-primary-subtle: var(--color-primary-subtle);
+  --dashboard-secondary: var(--color-walnut);
+  --dashboard-secondary-subtle: var(--color-walnut-subtle);
+  --dashboard-success: oklch(52% 0.1 155);
+  --dashboard-warning: oklch(70% 0.12 75);
+  --dashboard-critical: oklch(58% 0.18 25);
+  --dashboard-critical-subtle: oklch(94% 0.025 25);
+  --dashboard-warning-subtle: oklch(95% 0.03 85);
+}
+
+:root[data-theme="dark"] {
+    --dashboard-canvas: oklch(20% 0.018 95);
+    --dashboard-surface: oklch(24% 0.02 95);
+    --dashboard-surface-raised: oklch(28% 0.022 95);
+    --dashboard-foreground: oklch(94% 0.012 95);
+    --dashboard-muted: oklch(74% 0.02 85);
+    --dashboard-border: oklch(37% 0.025 90);
+    --dashboard-primary: oklch(72% 0.11 155);
+    --dashboard-primary-contrast: oklch(20% 0.018 95);
+    --dashboard-primary-subtle: oklch(29% 0.045 155);
+    --dashboard-secondary: oklch(76% 0.07 55);
+    --dashboard-secondary-subtle: oklch(29% 0.03 65);
+    --dashboard-success: oklch(72% 0.11 155);
+    --dashboard-warning: oklch(80% 0.12 75);
+    --dashboard-critical: oklch(72% 0.16 25);
+    --dashboard-critical-subtle: oklch(29% 0.045 25);
+    --dashboard-warning-subtle: oklch(30% 0.04 85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --dashboard-canvas: oklch(20% 0.018 95);
+    --dashboard-surface: oklch(24% 0.02 95);
+    --dashboard-surface-raised: oklch(28% 0.022 95);
+    --dashboard-foreground: oklch(94% 0.012 95);
+    --dashboard-muted: oklch(74% 0.02 85);
+    --dashboard-border: oklch(37% 0.025 90);
+    --dashboard-primary: oklch(72% 0.11 155);
+    --dashboard-primary-contrast: oklch(20% 0.018 95);
+    --dashboard-primary-subtle: oklch(29% 0.045 155);
+    --dashboard-secondary: oklch(76% 0.07 55);
+    --dashboard-secondary-subtle: oklch(29% 0.03 65);
+    --dashboard-success: oklch(72% 0.11 155);
+    --dashboard-warning: oklch(80% 0.12 75);
+    --dashboard-critical: oklch(72% 0.16 25);
+    --dashboard-critical-subtle: oklch(29% 0.045 25);
+    --dashboard-warning-subtle: oklch(30% 0.04 85);
+  }
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html, body, #root { min-height: 100%; }
+  html { overflow-x: hidden; }
+  body { margin: 0; background: var(--dashboard-canvas); color: var(--dashboard-foreground); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  button:focus-visible { outline: 2px solid var(--dashboard-primary); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #root,
+  #root * {
+    transition-duration: 180ms;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-timing-function: ease;
+  }
+}
