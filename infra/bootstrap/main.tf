@@ -97,10 +97,13 @@ resource "aws_iam_role_policy" "github_terraform" {
         Effect = "Allow"
         Action = [
           "acm:*", "ec2:*", "ecs:*", "elasticloadbalancing:*", "logs:*",
-          "route53:ChangeResourceRecordSets", "route53:GetHostedZone", "route53:ListHostedZonesByName",
+          "route53:ChangeResourceRecordSets", "route53:GetChange", "route53:GetHostedZone",
+          "route53:ListHostedZones", "route53:ListHostedZonesByName",
+          "route53:ListResourceRecordSets", "route53:ListTagsForResource",
           "iam:CreateRole", "iam:DeleteRole", "iam:GetRole", "iam:PassRole", "iam:TagRole",
           "iam:AttachRolePolicy", "iam:DetachRolePolicy", "iam:PutRolePolicy", "iam:DeleteRolePolicy",
-          "iam:GetRolePolicy", "iam:ListRolePolicies", "iam:ListAttachedRolePolicies",
+          "iam:GetRolePolicy", "iam:ListRolePolicies", "iam:ListAttachedRolePolicies", "iam:ListRoleTags",
+          "iam:UntagRole", "iam:UpdateAssumeRolePolicy",
           "s3:GetBucketVersioning", "s3:GetEncryptionConfiguration", "s3:GetPublicAccessBlock"
         ]
         Resource = "*"

@@ -7,6 +7,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Fixed
+
+- Allow the production Terraform role to discover Route 53 hosted zones and
+  read the records and change status required to manage DNS safely.
+
 ## [1.0.2] - 2026-07-18
 
 ### Fixed
