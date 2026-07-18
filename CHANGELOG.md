@@ -7,6 +7,12 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Added
+
+- Dependabot version updates for npm and GitHub Actions, SonarQube Cloud
+  quality-gate enforcement, and Trivy scans for the repository and release
+  images before publication.
+
 ### Changed
 
 - Removed client-specific references from the public documentation and project graph.
