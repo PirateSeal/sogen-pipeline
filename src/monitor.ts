@@ -25,6 +25,12 @@ export interface MonitorSnapshot {
   targets: TargetSnapshot[];
 }
 
+export interface TargetHistory {
+  id: string;
+  results: ProbeResult[];
+  url: string;
+}
+
 export interface ProbeClient {
   probe(target: MonitoredTarget, timeoutMs: number): Promise<ProbeResult>;
 }
@@ -178,6 +184,22 @@ export class MonitorService {
     return {
       globalSli: totalSamples === 0 ? null : totalSuccesses / totalSamples,
       targets,
+    };
+  }
+
+  history(targetId: string): TargetHistory | null {
+    const target = this.config.targets.find((item) => item.id === targetId);
+    if (!target) {
+      return null;
+    }
+
+    const targetResults = this.results.get(targetId) ?? [];
+    this.prune(targetResults);
+
+    return {
+      id: target.id,
+      results: targetResults.map((result) => ({ ...result })),
+      url: target.url,
     };
   }
 
