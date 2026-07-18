@@ -37,6 +37,12 @@ L’authentification GitHub vers AWS doit utiliser **OIDC**, sans clé AWS longu
 
 L’image est publique dans `ghcr.io/<owner>/<image>`. La CI publie avec le `GITHUB_TOKEN` éphémère et les commandes Docker du runner ; elle n’utilise ni identifiant de registre persistant ni action tierce pour la connexion ou le push.
 
+## CI et releases
+
+Le workflow [CI](.github/workflows/ci.yml) exécute `lint`, les tests avec couverture et la compilation sur les pull requests vers `master` ainsi que sur les push vers cette branche. Un tag Git `v*` déclenche ensuite la construction d’une image unique, son test de conteneur, sa publication dans GHCR avec les tags de version et de SHA court, puis la création d’une GitHub Release avec notes générées automatiquement.
+
+Les seules actions réutilisées sont les actions GitHub officielles `actions/checkout` et `actions/setup-node`, épinglées à des SHA immuables. Docker, l’authentification GHCR et la création de release passent par les exécutables natifs du runner (`docker` et `gh`) : aucune action tierce ni action locale n’est nécessaire à ce stade. Si un besoin non couvert apparaît, une action composite locale, minimale et versionnée dans le dépôt sera privilégiée et documentée avec ses entrées, sorties et permissions.
+
 ## Exécuter l’API localement
 
 ```bash
@@ -64,7 +70,7 @@ L’image utilise un build multi-stage basé sur `node:24-alpine`. Son runtime n
 Pour rejouer la vérification de conteneur après un build local :
 
 ```bash
-npm run test:container
+npm run test:container -- slo-watch:0.1.0
 ```
 
 ## Gate avant démarrage
