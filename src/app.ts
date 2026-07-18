@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 
 import type { AppConfig } from './config.js';
+import { toPrometheusMetrics } from './metrics.js';
 import type { MonitorService } from './monitor.js';
 
 export interface AppDependencies {
@@ -43,6 +44,12 @@ export function buildApp({ config, monitor }: AppDependencies) {
       windowSeconds: 60 * 60,
     });
   });
+
+  app.get('/metrics', async (_request, reply) =>
+    reply
+      .type('text/plain; version=0.0.4; charset=utf-8')
+      .send(toPrometheusMetrics(monitor.snapshot())),
+  );
 
   return app;
 }
