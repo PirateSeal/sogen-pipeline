@@ -61,7 +61,7 @@ Le dépôt public doit permettre à un évaluateur de comprendre rapidement :
 Le projet est considéré terminé quand :
 
 - une pull request déclenche lint, tests, couverture, Sonar et Trivy ;
-- le workflow de `main` construit une seule image immuable et la publie dans GHCR ;
+- le workflow de `master` construit une seule image immuable et la publie dans GHCR ;
 - cette même image est déployée sur ECS/Fargate ;
 - un smoke test interroge l’application après le déploiement ;
 - le README permet une démonstration de deux minutes ;

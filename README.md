@@ -37,6 +37,20 @@ L’authentification GitHub vers AWS doit utiliser **OIDC**, sans clé AWS longu
 
 L’image est publique dans `ghcr.io/<owner>/<image>`. La CI publie avec le `GITHUB_TOKEN` éphémère et les commandes Docker du runner ; elle n’utilise ni identifiant de registre persistant ni action tierce pour la connexion ou le push.
 
+## Exécuter l’API localement
+
+```bash
+cp .env.example .env
+npm install
+npm run dev
+```
+
+`TARGETS_JSON` déclare les cibles contrôlées par le serveur. Par défaut, l’exemple configure `tcousin.com`, `vs-calculator.tcousin.com` et `sc-haul.tcousin.com`. Les résultats de leurs sondes sont conservés une heure en mémoire ; ils sont donc perdus au redémarrage.
+
+- `GET /healthz` et `GET /readyz` indiquent la santé de l’API elle-même ;
+- `GET /api/status` retourne `503` tant qu’une cible est inconnue ou indisponible ;
+- `GET /metrics` expose les mesures au format Prometheus.
+
 ## Gate avant démarrage
 
 Avant le premier commit, préparer sans exécuter le projet :

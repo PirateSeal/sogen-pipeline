@@ -28,13 +28,13 @@ L’application lit au minimum :
 | Variable | Rôle | Exemple |
 |---|---|---|
 | `PORT` | Port d’écoute | `3000` |
-| `TARGET_URL` | URL surveillée | `https://example.com` |
+| `TARGETS_JSON` | Liste JSON des cibles surveillées | `[{"id":"portfolio","url":"https://tcousin.com"}]` |
 | `SLO_TARGET` | Objectif de disponibilité | `0.995` |
 | `CHECK_INTERVAL_MS` | Fréquence de mesure | `30000` |
 | `REQUEST_TIMEOUT_MS` | Timeout d’une sonde | `5000` |
 | `APP_VERSION` | SHA ou version de l’image | SHA Git |
 
-La configuration doit être validée au démarrage. Une URL invalide ou une cible SLO hors limites doit provoquer un échec explicite.
+La configuration doit être validée au démarrage. Les identifiants de cible doivent être uniques, les URLs doivent être HTTPS et sans credentials, et une cible SLO hors limites doit provoquer un échec explicite. Les cibles sont fournies uniquement par la configuration serveur ; aucune route publique ne les modifie.
 
 ### Endpoints obligatoires
 
@@ -46,7 +46,7 @@ La configuration doit être validée au démarrage. Une URL invalide ou une cibl
 | `GET /readyz` | Capacité de l’application à servir des requêtes |
 | `GET /metrics` | Métriques Prometheus ou format texte équivalent |
 
-`/healthz` ne doit pas devenir rouge parce que `TARGET_URL` est indisponible : sinon l’orchestrateur redémarrerait une application saine à cause d’une dépendance externe défaillante.
+`/healthz` ne doit pas devenir rouge parce qu’une cible est indisponible : sinon l’orchestrateur redémarrerait une application saine à cause d’une dépendance externe défaillante. `/api/status` peut retourner `503` lorsqu’une cible est inconnue ou indisponible.
 
 ### État
 
@@ -98,15 +98,15 @@ L’image doit :
 Tags recommandés :
 
 - `<sha>` : référence immuable utilisée pour le déploiement et le rollback ;
-- `main` : alias pratique facultatif ;
+- `master` : alias pratique facultatif ;
 - éviter d’utiliser `latest` comme seule référence.
 
 ## 4. Pipeline GitHub Actions
 
 ### Déclencheurs
 
-- `pull_request` vers `main` : validations sans déploiement ;
-- `push` sur `main` : validations, image, publication, déploiement et smoke test ;
+- `pull_request` vers `master` : validations sans déploiement ;
+- `push` sur `master` : validations, image, publication, déploiement et smoke test ;
 - `workflow_dispatch` : relance ou démonstration manuelle facultative.
 
 ### Graphe des jobs
@@ -121,7 +121,7 @@ quality
             └── container
                  ├── build image une seule fois
                  ├── trivy-image
-                 └── push GHCR (main uniquement)
+                 └── push GHCR (master uniquement)
                       └── deploy ECS
                            └── smoke-test
 ```
@@ -137,7 +137,7 @@ permissions:
   contents: read
 ```
 
-Le job `container`, exécuté seulement sur `main`, ajoute uniquement l’autorisation de publier le package :
+Le job `container`, exécuté seulement sur `master`, ajoute uniquement l’autorisation de publier le package :
 
 ```yaml
 permissions:
@@ -236,7 +236,7 @@ Le README doit expliquer comment redéployer le SHA précédent. Le rollback doi
 
 ## 8. Sécurité applicative
 
-- refuser les schémas autres que `http` et `https` pour `TARGET_URL` ;
+- refuser les schémas autres que `https` pour les URLs de `TARGETS_JSON` ;
 - appliquer un timeout strict ;
 - ne jamais retourner de secret dans les endpoints ;
 - limiter la taille des réponses lues ;
@@ -351,5 +351,5 @@ Le nombre exact de commits peut être réduit. Ne jamais créer des commits arti
 - Comment prouver quelle version est déployée ?
 - Comment revenir en arrière ?
 - Quelles permissions OIDC et IAM sont réellement nécessaires ?
-- Quel risque SSRF présente `TARGET_URL` ?
+- Quel risque SSRF présentent les URLs de `TARGETS_JSON` ?
 - Que feriez-vous avec une journée supplémentaire ?
