@@ -20,6 +20,7 @@ export function buildApp({ config, monitor }: AppDependencies) {
       metrics: '/metrics',
       readiness: '/readyz',
       status: '/api/status',
+      targetHistory: '/api/targets/:targetId/history',
     },
   }));
 
@@ -44,6 +45,24 @@ export function buildApp({ config, monitor }: AppDependencies) {
       windowSeconds: 60 * 60,
     });
   });
+
+  app.get<{ Params: { targetId: string } }>(
+    '/api/targets/:targetId/history',
+    async (request, reply) => {
+      const history = monitor.history(request.params.targetId);
+      if (!history) {
+        return reply.code(404).send({
+          error: 'Monitoring target not found.',
+          targetId: request.params.targetId,
+        });
+      }
+
+      return {
+        ...history,
+        windowSeconds: 60 * 60,
+      };
+    },
+  );
 
   app.get('/metrics', async (_request, reply) =>
     reply
