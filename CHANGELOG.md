@@ -11,6 +11,14 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 - Allow the production Terraform role to discover Route 53 hosted zones and
   read the records and change status required to manage DNS safely.
+- Allow creation of only the ECS and Elastic Load Balancing service-linked
+  roles required during the first deployment in an AWS account.
+
+### Security
+
+- Scope workload-role administration to the two ECS roles and restrict
+  `iam:PassRole` to ECS tasks; validate the deployed policy with IAM Access
+  Analyzer and resource-aware policy simulations.
 
 ## [1.0.2] - 2026-07-18
 
