@@ -54,7 +54,7 @@ npm run dev
 `TARGETS_JSON` déclare les cibles contrôlées par le serveur. Par défaut, l’exemple configure `tcousin.com`, `vs-calculator.tcousin.com` et `sc-haul.tcousin.com`. Les résultats de leurs sondes sont conservés une heure en mémoire ; ils sont donc perdus au redémarrage.
 
 - `GET /healthz` et `GET /readyz` indiquent la santé de l’API elle-même ;
-- `GET /api/status` retourne `503` tant qu’une cible est inconnue ou indisponible ;
+- `GET /api/status` retourne l’état de chaque cible, sa dernière sonde, le SLI et les compteurs de la dernière heure, ainsi que `averageLatencyMs` (ou `null` avant toute sonde). Il retourne `503` tant qu’une cible est inconnue ou indisponible ;
 - `GET /api/targets/<id>/history` retourne les sondes retenues de la dernière heure pour une cible connue ;
 - `GET /metrics` expose les mesures au format Prometheus.
 
@@ -65,6 +65,8 @@ npm run dev:web
 ```
 
 Vite sert l’interface sur son port par défaut et proxyfie les routes API vers `http://localhost:3000`. Aucune variable de configuration ou information sensible n’est exposée au navigateur.
+
+Le dashboard se rafraîchit toutes les 30 secondes et permet de sélectionner une cible. Sa courbe de latence conserve une échelle glissante d’une heure, ancrée sur l’heure courante ; chaque carte affiche la dernière latence et, lorsqu’elle est disponible, la moyenne de la fenêtre. Les indicateurs utilisent des états sémantiques (vert, ambre, rouge) et la barre de fiabilité évolue progressivement selon le SLI.
 
 ## Construire et exécuter les images Docker
 
