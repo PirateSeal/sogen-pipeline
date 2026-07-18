@@ -42,6 +42,7 @@ La configuration doit être validée au démarrage. Les identifiants de cible do
 |---|---|
 | `GET /` | Page ou réponse de présentation avec état synthétique |
 | `GET /api/status` | SLI courant, SLO cible, latence, compteurs et version |
+| `GET /api/targets/:targetId/history` | Mesures horodatées de la dernière heure pour une cible ; `404` si elle est inconnue |
 | `GET /healthz` | Santé du processus ; ne dépend pas de la cible surveillée |
 | `GET /readyz` | Capacité de l’application à servir des requêtes |
 | `GET /metrics` | Métriques Prometheus ou format texte équivalent |

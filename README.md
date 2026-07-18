@@ -49,6 +49,7 @@ npm run dev
 
 - `GET /healthz` et `GET /readyz` indiquent la santé de l’API elle-même ;
 - `GET /api/status` retourne `503` tant qu’une cible est inconnue ou indisponible ;
+- `GET /api/targets/<id>/history` retourne les sondes retenues de la dernière heure pour une cible connue ;
 - `GET /metrics` expose les mesures au format Prometheus.
 
 ## Construire et exécuter l’image Docker
