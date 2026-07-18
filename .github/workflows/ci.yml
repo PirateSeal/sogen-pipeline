@@ -37,7 +37,7 @@ jobs:
       - name: Test with coverage
         run: npm run test:coverage
 
-      - name: Build API
+      - name: Build API and dashboard
         run: npm run build
 
       - name: Write quality summary
@@ -50,7 +50,7 @@ jobs:
           const metric = (name) => `${coverage[name].pct}%`;
 
           console.log('## Quality checks');
-          console.log('All API checks passed: dependency installation, lint, Vitest coverage, and TypeScript build.');
+          console.log('All API and dashboard checks passed: dependency installation, lint, Vitest coverage, and production builds.');
           console.log('');
           console.log('| Statements | Branches | Functions | Lines |');
           console.log('| ---: | ---: | ---: | ---: |');
@@ -75,29 +75,41 @@ jobs:
         run: |
           version="${GITHUB_REF_NAME}"
           short_sha="${GITHUB_SHA::12}"
-          image_name="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/slo-watch"
+          api_image_name="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/slo-watch-api"
+          web_image_name="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/slo-watch-web"
 
           {
             echo "VERSION=$version"
             echo "SHORT_SHA=$short_sha"
-            echo "IMAGE_NAME=$image_name"
-            echo "IMAGE_SHA=$image_name:$short_sha"
-            echo "IMAGE_VERSION=$image_name:$version"
+            echo "API_IMAGE_SHA=$api_image_name:$short_sha"
+            echo "API_IMAGE_VERSION=$api_image_name:$version"
+            echo "WEB_IMAGE_SHA=$web_image_name:$short_sha"
+            echo "WEB_IMAGE_VERSION=$web_image_name:$version"
           } >> "$GITHUB_ENV"
 
-      - name: Build release image
+      - name: Build release images
         run: |
           docker build \
+            --target api \
             --build-arg "APP_VERSION=$VERSION" \
             --label "org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}" \
             --label "org.opencontainers.image.revision=${{ github.sha }}" \
             --label "org.opencontainers.image.version=$VERSION" \
-            --tag "$IMAGE_SHA" \
+            --tag "$API_IMAGE_SHA" \
             .
-          docker image tag "$IMAGE_SHA" "$IMAGE_VERSION"
+          docker image tag "$API_IMAGE_SHA" "$API_IMAGE_VERSION"
+          docker build \
+            --target web \
+            --build-arg "APP_VERSION=$VERSION" \
+            --label "org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}" \
+            --label "org.opencontainers.image.revision=${{ github.sha }}" \
+            --label "org.opencontainers.image.version=$VERSION" \
+            --tag "$WEB_IMAGE_SHA" \
+            .
+          docker image tag "$WEB_IMAGE_SHA" "$WEB_IMAGE_VERSION"
 
-      - name: Verify release image
-        run: npm run test:container -- "$IMAGE_SHA"
+      - name: Verify release images
+        run: npm run test:compose -- "$API_IMAGE_SHA" "$WEB_IMAGE_SHA"
 
       - name: Authenticate to GitHub Container Registry
         env:
@@ -105,10 +117,12 @@ jobs:
         shell: bash
         run: docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin <<< "$GITHUB_TOKEN"
 
-      - name: Publish image
+      - name: Publish images
         run: |
-          docker push "$IMAGE_SHA"
-          docker push "$IMAGE_VERSION"
+          docker push "$API_IMAGE_SHA"
+          docker push "$API_IMAGE_VERSION"
+          docker push "$WEB_IMAGE_SHA"
+          docker push "$WEB_IMAGE_VERSION"
 
       - name: Create GitHub release
         env:
@@ -125,6 +139,8 @@ jobs:
             echo "| --- | --- |"
             echo "| Git tag | [\`$VERSION\`](${{ github.server_url }}/${{ github.repository }}/releases/tag/$VERSION) |"
             echo "| Commit | [\`$SHORT_SHA\`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) |"
-            echo "| Container image | \`$IMAGE_VERSION\` |"
-            echo "| Immutable image tag | \`$IMAGE_SHA\` |"
+            echo "| API image | \`$API_IMAGE_VERSION\` |"
+            echo "| API immutable tag | \`$API_IMAGE_SHA\` |"
+            echo "| Web image | \`$WEB_IMAGE_VERSION\` |"
+            echo "| Web immutable tag | \`$WEB_IMAGE_SHA\` |"
           } >> "$GITHUB_STEP_SUMMARY"
