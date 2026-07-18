@@ -51,6 +51,21 @@ npm run dev
 - `GET /api/status` retourne `503` tant qu’une cible est inconnue ou indisponible ;
 - `GET /metrics` expose les mesures au format Prometheus.
 
+## Construire et exécuter l’image Docker
+
+```bash
+docker build --build-arg APP_VERSION=0.1.0 -t slo-watch:0.1.0 .
+docker run --rm --env-file .env -p 3000:3000 slo-watch:0.1.0
+```
+
+L’image utilise un build multi-stage basé sur `node:24-alpine`. Son runtime ne contient que les dépendances de production et le code compilé ; il s’exécute avec l’utilisateur non-root `node`. Docker vérifie `/healthz` avec un `HEALTHCHECK` Node natif.
+
+Pour rejouer la vérification de conteneur après un build local :
+
+```bash
+npm run test:container
+```
+
 ## Gate avant démarrage
 
 Avant le premier commit, préparer sans exécuter le projet :
