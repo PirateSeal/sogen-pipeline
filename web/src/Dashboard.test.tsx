@@ -73,6 +73,25 @@ describe('Dashboard', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Network offline');
   });
 
+  it('renders the semantic status elements when a target has no probe yet', async () => {
+    const awaitingStatus = {
+      ...status,
+      targets: [{ ...status.targets[0], averageLatencyMs: null, lastProbe: null, sli: null, state: 'unknown' as const, successCount: 0 }],
+    };
+    vi.stubGlobal(
+      'fetch',
+      vi.fn()
+        .mockResolvedValueOnce(new Response(JSON.stringify(awaitingStatus), { status: 503 }))
+        .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'portfolio', results: [], url: awaitingStatus.targets[0].url, windowSeconds: 3600 }))),
+    );
+
+    render(<Dashboard />);
+
+    expect((await screen.findAllByText('Awaiting data')).length).toBeGreaterThan(0);
+    expect(screen.getByText('Pending')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar', { name: 'Success rate over the retained window' })).toHaveAttribute('value', '0');
+  });
+
   it('switches and persists the selected theme', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(status))));
     render(<Dashboard />);
@@ -80,5 +99,7 @@ describe('Dashboard', () => {
     fireEvent.click(button);
     expect(document.documentElement.dataset.theme).toBe('dark');
     expect(window.localStorage.getItem('slo-watch-theme')).toBe('dark');
+    fireEvent.click(button);
+    expect(document.documentElement.dataset.theme).toBe('light');
   });
 });

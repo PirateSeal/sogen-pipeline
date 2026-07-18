@@ -52,4 +52,11 @@ describe('loadConfig', () => {
   ])('rejects %s', (_scenario, overrides) => {
     expect(() => loadConfig(environment(overrides))).toThrow();
   });
+
+  it.each([
+    ['a non-finite number', { SLO_TARGET: 'NaN' }],
+    ['a target URL with a non-string value', { TARGETS_JSON: JSON.stringify([{ id: 'invalid-url', url: 42 }]) }],
+  ])('uses TypeError for %s', (_scenario, overrides) => {
+    expect(() => loadConfig(environment(overrides))).toThrow(TypeError);
+  });
 });
