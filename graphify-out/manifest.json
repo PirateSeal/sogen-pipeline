@@ -1,0 +1,82 @@
+{
+  "eslint.config.js": {
+    "mtime": 1784392711.9985783,
+    "ast_hash": "551c4daea061f6c65dd675fbcb87327e",
+    "semantic_hash": "551c4daea061f6c65dd675fbcb87327e"
+  },
+  "package.json": {
+    "mtime": 1784393012.9154804,
+    "ast_hash": "7bbab76d5990e18b6048ea0897b15556",
+    "semantic_hash": "7bbab76d5990e18b6048ea0897b15556"
+  },
+  "src/app.ts": {
+    "mtime": 1784392842.891862,
+    "ast_hash": "c3e08b91c896246fb4eb2de322fb3f6e",
+    "semantic_hash": "c3e08b91c896246fb4eb2de322fb3f6e"
+  },
+  "src/config.ts": {
+    "mtime": 1784392711.998812,
+    "ast_hash": "6091d4c1adba8f4f452f72036f06e0c8",
+    "semantic_hash": "6091d4c1adba8f4f452f72036f06e0c8"
+  },
+  "src/metrics.ts": {
+    "mtime": 1784392842.8914292,
+    "ast_hash": "11a27434538816880d258fa4f04794a5",
+    "semantic_hash": "11a27434538816880d258fa4f04794a5"
+  },
+  "src/monitor.ts": {
+    "mtime": 1784392931.1816533,
+    "ast_hash": "bf5237e5b837aa10cd0ff68ac9c2492b",
+    "semantic_hash": "bf5237e5b837aa10cd0ff68ac9c2492b"
+  },
+  "src/server.ts": {
+    "mtime": 1784392795.686252,
+    "ast_hash": "3122bd619fb0439a1f2fa2cb233f82b5",
+    "semantic_hash": "3122bd619fb0439a1f2fa2cb233f82b5"
+  },
+  "tests/app.test.ts": {
+    "mtime": 1784392903.5358267,
+    "ast_hash": "ab8d5dd7564fb9d599d0ef0b59f19ef0",
+    "semantic_hash": "ab8d5dd7564fb9d599d0ef0b59f19ef0"
+  },
+  "tests/config.test.ts": {
+    "mtime": 1784392903.5353599,
+    "ast_hash": "0855b28f36e620c4a4a12d383d9c2c12",
+    "semantic_hash": "0855b28f36e620c4a4a12d383d9c2c12"
+  },
+  "tests/monitor.test.ts": {
+    "mtime": 1784392943.7462163,
+    "ast_hash": "459a0af4a5cd90de007671391c09302d",
+    "semantic_hash": "459a0af4a5cd90de007671391c09302d"
+  },
+  "tsconfig.json": {
+    "mtime": 1784392711.9983938,
+    "ast_hash": "c598d608eab91ee5de72c8023e37fab8",
+    "semantic_hash": "c598d608eab91ee5de72c8023e37fab8"
+  },
+  "README.md": {
+    "mtime": 1784392987.0576198,
+    "ast_hash": "0b3d3b496fe68150e3c1c3c7279cf098",
+    "semantic_hash": "0b3d3b496fe68150e3c1c3c7279cf098"
+  },
+  "docs/ARCHITECTURE_RESEARCH.md": {
+    "mtime": 1784390509.2851446,
+    "ast_hash": "9afdf63f1c2db36ae3cbaadf51998677",
+    "semantic_hash": "9afdf63f1c2db36ae3cbaadf51998677"
+  },
+  "docs/EXERCISE_RULES.md": {
+    "mtime": 1784392987.0584998,
+    "ast_hash": "781aa2feaa8e78494c59cbcb1aa45aa6",
+    "semantic_hash": "781aa2feaa8e78494c59cbcb1aa45aa6"
+  },
+  "docs/IMPLEMENTATION_REQUIREMENTS.md": {
+    "mtime": 1784392998.9728706,
+    "ast_hash": "5b05ed9b24a8eaa3d593cfb25c552206",
+    "semantic_hash": "5b05ed9b24a8eaa3d593cfb25c552206"
+  },
+  "docs/TERRAFORM_DECISIONS.md": {
+    "mtime": 1784392987.057919,
+    "ast_hash": "66ecf2a22d88adaecd7ee340a00a480a",
+    "semantic_hash": "66ecf2a22d88adaecd7ee340a00a480a"
+  }
+}
