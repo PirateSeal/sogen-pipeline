@@ -1,0 +1,10 @@
+.env
+.git
+.github
+.DS_Store
+coverage
+dist
+docs
+graphify-out
+node_modules
+tests
