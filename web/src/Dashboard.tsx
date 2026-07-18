@@ -70,49 +70,118 @@ function stateCounts(targets: TargetSnapshot[]) {
   );
 }
 
-function HistoryChart({ results }: { results: ProbeResult[] }) {
+export function reliabilityColor(sli: number | null): string {
+  if (sli === null) {
+    return 'var(--dashboard-muted)';
+  }
+  if (sli >= 0.995) {
+    return 'var(--dashboard-success)';
+  }
+  if (sli >= 0.95) {
+    return `color-mix(in oklch, var(--dashboard-success) ${((sli - 0.95) / 0.045) * 100}%, var(--dashboard-warning))`;
+  }
+  if (sli >= 0.9) {
+    return `color-mix(in oklch, var(--dashboard-warning) ${((sli - 0.9) / 0.05) * 100}%, var(--dashboard-critical))`;
+  }
+  return 'var(--dashboard-critical)';
+}
+
+export function latencyColor(probe: ProbeResult | null): string {
+  if (!probe) {
+    return 'var(--dashboard-muted)';
+  }
+  if (!probe.success || probe.latencyMs > 800) {
+    return 'var(--dashboard-critical)';
+  }
+  if (probe.latencyMs > 300) {
+    return 'var(--dashboard-warning)';
+  }
+  return 'var(--dashboard-success)';
+}
+
+export function httpStatusColor(statusCode: number | undefined): string {
+  if (statusCode === undefined) {
+    return 'var(--dashboard-muted)';
+  }
+  if (statusCode < 400) {
+    return 'var(--dashboard-success)';
+  }
+  if (statusCode < 500) {
+    return 'var(--dashboard-warning)';
+  }
+  return 'var(--dashboard-critical)';
+}
+
+const chartLeft = 4;
+const chartRight = 96;
+
+export function timelineX(timestamp: number, windowSeconds: number, now: number): number {
+  const windowMilliseconds = Math.max(windowSeconds * 1_000, 1);
+  const ratio = Math.min(1, Math.max(0, (timestamp - (now - windowMilliseconds)) / windowMilliseconds));
+  return chartLeft + ratio * (chartRight - chartLeft);
+}
+
+function HistoryChart({
+  results,
+  windowSeconds,
+}: {
+  results: ProbeResult[];
+  windowSeconds: number;
+}) {
   if (results.length === 0) {
-    return <p className="grid flex-1 place-items-center text-center text-sm text-[var(--dashboard-muted)]">No probes have been retained for this target yet.</p>;
+    return <div className="my-6 grid aspect-[5/2] place-items-center rounded-lg border border-dashed border-[var(--dashboard-border)] text-center text-sm text-[var(--dashboard-muted)]">No probes have been retained for this target yet.</div>;
   }
 
   const maximumLatency = Math.max(...results.map((result) => result.latencyMs), 1);
-  const point = (result: ProbeResult, index: number) => {
-    const x = results.length === 1 ? 50 : (index / (results.length - 1)) * 100;
-    const y = 90 - (result.latencyMs / maximumLatency) * 75;
+  const now = Date.now();
+  const point = (result: ProbeResult) => {
+    const x = timelineX(result.timestamp, windowSeconds, now);
+    const y = 31 - (result.latencyMs / maximumLatency) * 23;
     return { x, y };
   };
 
   return (
-    <svg
-      aria-label="Latency history for the selected target"
-      className="my-4 h-36 w-full overflow-visible"
-      role="img"
-      viewBox="0 0 100 100"
-    >
-      <line stroke="var(--dashboard-border)" strokeWidth=".6" x1="0" x2="100" y1="90" y2="90" />
-      <polyline
-        fill="none"
-        points={results.map((result, index) => {
-          const { x, y } = point(result, index);
-          return `${x},${y}`;
-        }).join(' ')}
-        stroke="var(--dashboard-primary)"
-        strokeWidth="1.6"
-        vectorEffect="non-scaling-stroke"
-      />
-      {results.map((result, index) => {
-        const { x, y } = point(result, index);
-        return (
-          <circle
-            cx={x}
-            cy={y}
-            fill={result.success ? 'var(--dashboard-success)' : 'var(--dashboard-critical)'}
-            key={`${result.timestamp}-${index}`}
-            r="2.2"
-          />
-        );
-      })}
-    </svg>
+    <section className="my-6 min-w-0">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-sm font-semibold">Latency</span>
+        <span className="text-xs text-[var(--dashboard-muted)]">Last {Math.round(windowSeconds / 60)} minutes</span>
+      </div>
+      <svg
+        aria-label="Latency history for the selected target"
+        className="block aspect-[5/2] w-full rounded-lg bg-[var(--dashboard-surface)] p-3"
+        role="img"
+        viewBox="0 0 100 40"
+      >
+        <line stroke="var(--dashboard-border)" strokeWidth=".35" x1="4" x2="96" y1="8" y2="8" />
+        <line stroke="var(--dashboard-border)" strokeWidth=".35" x1="4" x2="96" y1="19.5" y2="19.5" />
+        <line stroke="var(--dashboard-border)" strokeWidth=".55" x1="4" x2="96" y1="31" y2="31" />
+        <polyline
+          fill="none"
+          points={results.map((result) => {
+            const { x, y } = point(result);
+            return `${x},${y}`;
+          }).join(' ')}
+          stroke="var(--dashboard-primary)"
+          strokeWidth=".8"
+          vectorEffect="non-scaling-stroke"
+        />
+        {results.map((result, index) => {
+          const { x, y } = point(result);
+          return (
+            <circle
+              cx={x}
+              cy={y}
+              fill={result.success ? 'var(--dashboard-success)' : 'var(--dashboard-critical)'}
+              key={`${result.timestamp}-${index}`}
+              opacity="0.9"
+              r="0.55"
+            />
+          );
+        })}
+        <text fill="var(--dashboard-muted)" fontSize="3.5" textAnchor="start" x="4" y="38">{`${Math.round(windowSeconds / 60)}m ago`}</text>
+        <text fill="var(--dashboard-muted)" fontSize="3.5" textAnchor="end" x="96" y="38">Now</text>
+      </svg>
+    </section>
   );
 }
 
@@ -137,9 +206,10 @@ function TargetCard({
         <span className={`text-xs font-bold uppercase tracking-wider ${target.state === 'healthy' ? 'text-[var(--dashboard-success)]' : target.state === 'degraded' ? 'text-[var(--dashboard-warning)]' : target.state === 'unavailable' ? 'text-[var(--dashboard-critical)]' : 'text-[var(--dashboard-muted)]'}`}>{stateLabels[target.state]}</span>
       </span>
       <span className="col-start-2 truncate text-xs text-[var(--dashboard-muted)]">{target.url}</span>
-      <span className="col-start-2 mt-2 flex gap-10 text-sm">
+      <span className="col-start-2 mt-2 flex flex-wrap gap-x-8 gap-y-2 text-sm">
         <span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">SLI</small>{percentage(target.sli)}</span>
         <span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Latency</small>{target.lastProbe ? `${target.lastProbe.latencyMs} ms` : '—'}</span>
+        {target.averageLatencyMs !== null && <span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Avg. latency</small>{target.averageLatencyMs} ms</span>}
       </span>
     </button>
   );
@@ -209,7 +279,7 @@ export function Dashboard() {
         </section>
         <aside aria-labelledby="details-heading" className="flex min-h-80 flex-col overflow-hidden rounded-xl border border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] p-5 shadow-sm lg:min-h-0">
           <p className="text-xs font-bold uppercase tracking-[.16em] text-[var(--dashboard-secondary)]">Selected target</p><h2 className="mt-1 text-xl font-semibold" id="details-heading">{selectedTarget?.id ?? 'No target selected'}</h2>
-          {selectedTarget && <><div className="mt-3 flex items-center gap-2 font-bold"><span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${selectedTarget.state === 'healthy' ? 'bg-[var(--dashboard-success)]' : selectedTarget.state === 'degraded' ? 'bg-[var(--dashboard-warning)]' : selectedTarget.state === 'unavailable' ? 'bg-[var(--dashboard-critical)]' : 'bg-[var(--dashboard-muted)]'}`} /><span>{stateLabels[selectedTarget.state]}</span></div><p className="mt-1 truncate text-xs text-[var(--dashboard-muted)]">{selectedTarget.url}</p><HistoryChart results={history?.results ?? []} /><div className="grid shrink-0 gap-3 border-t border-[var(--dashboard-border)] pt-3 text-sm"><span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Latest probe</small>{dateTime(selectedTarget.lastProbe?.timestamp)}</span><span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">HTTP status</small>{selectedTarget.lastProbe?.statusCode ?? '—'}</span><span className="grid gap-0.5"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Successes / failures</small>{selectedTarget.successCount} / {selectedTarget.failureCount}</span></div></>}
+          {selectedTarget && <><div className="mt-3 flex items-center gap-2 font-bold"><span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${selectedTarget.state === 'healthy' ? 'bg-[var(--dashboard-success)]' : selectedTarget.state === 'degraded' ? 'bg-[var(--dashboard-warning)]' : selectedTarget.state === 'unavailable' ? 'bg-[var(--dashboard-critical)]' : 'bg-[var(--dashboard-muted)]'}`} /><span>{stateLabels[selectedTarget.state]}</span></div><p className="mt-1 truncate text-xs text-[var(--dashboard-muted)]">{selectedTarget.url}</p><HistoryChart results={history?.results ?? []} windowSeconds={history?.windowSeconds ?? status?.windowSeconds ?? 3600} /><div className="mt-auto grid shrink-0 gap-3"><div className="grid grid-cols-3 gap-2"><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Latest latency</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: latencyColor(selectedTarget.lastProbe) }} />{selectedTarget.lastProbe ? `${selectedTarget.lastProbe.latencyMs} ms` : '—'}</strong></div><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">HTTP response</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: httpStatusColor(selectedTarget.lastProbe?.statusCode) }} />{selectedTarget.lastProbe?.statusCode ?? '—'}</strong></div><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Last probe</small><strong className="mt-1 block text-lg">{selectedTarget.lastProbe ? 'Current' : 'Pending'}</strong></div></div><div className="rounded-lg border border-[var(--dashboard-border)] bg-[var(--dashboard-surface)] p-4"><div className="flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.14em] text-[var(--dashboard-secondary)]">Window reliability</p><strong className="mt-1 block text-2xl tracking-tight" style={{ color: reliabilityColor(selectedTarget.sli) }}>{percentage(selectedTarget.sli)}</strong></div><div className="text-right text-xs text-[var(--dashboard-muted)]"><p>{selectedTarget.successCount} successful probes</p><p>{selectedTarget.failureCount} failed probes</p></div></div><div aria-label="Success rate over the retained window" className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--dashboard-border)]" role="progressbar" aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.round((selectedTarget.sli ?? 0) * 100)}><div className="h-full rounded-full" style={{ background: reliabilityColor(selectedTarget.sli), width: `${(selectedTarget.sli ?? 0) * 100}%` }} /></div></div><p className="text-xs text-[var(--dashboard-muted)]">Latest probe: {dateTime(selectedTarget.lastProbe?.timestamp)}</p></div></>}
         </aside>
       </section>
     </main>

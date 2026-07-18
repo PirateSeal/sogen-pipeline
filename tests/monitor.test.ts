@@ -61,9 +61,9 @@ describe('MonitorService', () => {
     expect(monitor.snapshot()).toMatchObject({
       globalSli: 1,
       targets: [
-        { id: 'portfolio', state: 'healthy', successCount: 1 },
-        { id: 'vs-calculator', state: 'healthy', successCount: 1 },
-        { id: 'sc-haul', state: 'healthy', successCount: 1 },
+        { averageLatencyMs: 42, id: 'portfolio', state: 'healthy', successCount: 1 },
+        { averageLatencyMs: 42, id: 'vs-calculator', state: 'healthy', successCount: 1 },
+        { averageLatencyMs: 42, id: 'sc-haul', state: 'healthy', successCount: 1 },
       ],
     });
   });

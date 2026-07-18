@@ -66,7 +66,12 @@ describe('HTTP routes', () => {
     const response = await app.inject('/api/status');
 
     expect(response.statusCode).toBe(200);
-    expect(response.json()).toMatchObject({ appVersion: 'test-sha', globalSli: 1 });
+    const payload = response.json();
+    expect(payload).toMatchObject({ appVersion: 'test-sha', globalSli: 1 });
+    expect(payload.targets[0]).toMatchObject({
+      averageLatencyMs: 10,
+      id: 'portfolio',
+    });
   });
 
   it('returns 503 when the latest probe fails', async () => {
