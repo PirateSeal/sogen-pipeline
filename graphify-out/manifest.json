@@ -1,137 +1,212 @@
 {
   "eslint.config.js": {
-    "mtime": 1784396560.5817232,
+    "mtime": 1784400298.4777758,
     "ast_hash": "551c4daea061f6c65dd675fbcb87327e",
     "semantic_hash": "551c4daea061f6c65dd675fbcb87327e"
   },
   "package.json": {
-    "mtime": 1784398324.4578803,
-    "ast_hash": "cab71859b2a3228ff976edde723aed2d",
+    "mtime": 1784403904.0108812,
+    "ast_hash": "579eb3687c8b52e48f35e384de5574fb",
     "semantic_hash": ""
   },
   "src/app.ts": {
-    "mtime": 1784396560.5867891,
+    "mtime": 1784400298.4848902,
     "ast_hash": "d60c5af00c968d643613b08868ee7445",
     "semantic_hash": ""
   },
   "src/config.ts": {
-    "mtime": 1784396560.5870118,
+    "mtime": 1784406259.4884455,
     "ast_hash": "6091d4c1adba8f4f452f72036f06e0c8",
     "semantic_hash": "6091d4c1adba8f4f452f72036f06e0c8"
   },
   "src/metrics.ts": {
-    "mtime": 1784396560.5872223,
+    "mtime": 1784400298.4853354,
     "ast_hash": "11a27434538816880d258fa4f04794a5",
     "semantic_hash": "11a27434538816880d258fa4f04794a5"
   },
   "src/monitor.ts": {
-    "mtime": 1784399511.6752486,
+    "mtime": 1784400298.48568,
     "ast_hash": "e37dc4f84ceea1926d386ae5c39bef93",
     "semantic_hash": ""
   },
   "src/server.ts": {
-    "mtime": 1784396560.587633,
+    "mtime": 1784406259.4887116,
     "ast_hash": "3122bd619fb0439a1f2fa2cb233f82b5",
     "semantic_hash": "3122bd619fb0439a1f2fa2cb233f82b5"
   },
   "tests/app.test.ts": {
-    "mtime": 1784399557.548762,
+    "mtime": 1784400298.4861865,
     "ast_hash": "6f5e9cdc44efbe156c6a576b296ddb84",
     "semantic_hash": ""
   },
   "tests/config.test.ts": {
-    "mtime": 1784396560.5881474,
+    "mtime": 1784406259.489039,
     "ast_hash": "0855b28f36e620c4a4a12d383d9c2c12",
     "semantic_hash": "0855b28f36e620c4a4a12d383d9c2c12"
   },
   "tests/monitor.test.ts": {
-    "mtime": 1784399511.6760952,
+    "mtime": 1784400298.4866648,
     "ast_hash": "e1d3a32b95dfd27defdf08a83813e3b3",
     "semantic_hash": ""
   },
   "tsconfig.json": {
-    "mtime": 1784396560.5885725,
+    "mtime": 1784400298.4868708,
     "ast_hash": "c598d608eab91ee5de72c8023e37fab8",
     "semantic_hash": "c598d608eab91ee5de72c8023e37fab8"
   },
   "README.md": {
-    "mtime": 1784400042.4861698,
-    "ast_hash": "4c33c84d29eb918e6ba888de4b926042",
+    "mtime": 1784406679.5442889,
+    "ast_hash": "0c8c34eea7e921c02405c1eab9dc73ed",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE_RESEARCH.md": {
-    "mtime": 1784390509.2851446,
-    "ast_hash": "9afdf63f1c2db36ae3cbaadf51998677",
-    "semantic_hash": "9afdf63f1c2db36ae3cbaadf51998677"
+    "mtime": 1784406686.6668231,
+    "ast_hash": "40207617f939f8ceb0c4706b05e06f83",
+    "semantic_hash": ""
   },
   "docs/EXERCISE_RULES.md": {
-    "mtime": 1784396560.58113,
-    "ast_hash": "781aa2feaa8e78494c59cbcb1aa45aa6",
-    "semantic_hash": "781aa2feaa8e78494c59cbcb1aa45aa6"
+    "mtime": 1784403904.0127287,
+    "ast_hash": "e6848ccda156df6dfb5ef72c7ea28935",
+    "semantic_hash": ""
   },
   "docs/IMPLEMENTATION_REQUIREMENTS.md": {
-    "mtime": 1784396560.5813918,
-    "ast_hash": "393699146e60b7817123330cd78fd435",
+    "mtime": 1784406701.0517435,
+    "ast_hash": "bee68dabe68d48f80932cc050baabff3",
     "semantic_hash": ""
   },
   "docs/TERRAFORM_DECISIONS.md": {
-    "mtime": 1784396560.5815144,
-    "ast_hash": "66ecf2a22d88adaecd7ee340a00a480a",
-    "semantic_hash": "66ecf2a22d88adaecd7ee340a00a480a"
+    "mtime": 1784406679.54507,
+    "ast_hash": "7e1b36135eca4fa50516271b725ba57a",
+    "semantic_hash": ""
   },
   "scripts/verify-compose.sh": {
-    "mtime": 1784397783.9694943,
+    "mtime": 1784400298.4843373,
     "ast_hash": "73446a6cbb943793ff6be71d15cae3a7",
     "semantic_hash": ""
   },
   "scripts/verify-container.sh": {
-    "mtime": 1784396560.5865307,
-    "ast_hash": "0dfeca59aa451d2493577378611937d4",
+    "mtime": 1784403915.2957623,
+    "ast_hash": "f61d52bb641a3b7c6435559621af0704",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1784397652.7300324,
+    "mtime": 1784400298.4871104,
     "ast_hash": "ded47b5c61c9c4aa94ae7dbd831bdabf",
     "semantic_hash": ""
   },
   "web/src/Dashboard.test.tsx": {
-    "mtime": 1784399511.676332,
+    "mtime": 1784406259.4895437,
     "ast_hash": "14ddd38db8c4e33d4389ae023c4afd64",
     "semantic_hash": ""
   },
   "web/src/Dashboard.tsx": {
-    "mtime": 1784399511.6758294,
+    "mtime": 1784406259.4898915,
     "ast_hash": "f3084916d650c2bedf53a43ffc132d2d",
     "semantic_hash": ""
   },
   "web/src/api.ts": {
-    "mtime": 1784399511.6755264,
+    "mtime": 1784406259.4901776,
     "ast_hash": "d1ce89b23f37db166a599cfddf0c5c9f",
     "semantic_hash": ""
   },
   "web/src/main.tsx": {
-    "mtime": 1784397652.7307727,
+    "mtime": 1784400298.4890354,
     "ast_hash": "2204e3b2a2b0942d1a64b124c210d0bb",
     "semantic_hash": ""
   },
   "web/vite.config.ts": {
-    "mtime": 1784398360.7428858,
+    "mtime": 1784400298.4897115,
     "ast_hash": "16078e8863cc591578b012c8fb176c29",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1784397804.6400647,
-    "ast_hash": "5a898fcbd15aa24837e2cd706d018a6f",
+    "mtime": 1784406640.2088897,
+    "ast_hash": "30a12e45460e4d2c541c79819a94cb6f",
     "semantic_hash": ""
   },
   "compose.yaml": {
-    "mtime": 1784397783.9692793,
+    "mtime": 1784400298.4764228,
     "ast_hash": "90d4aad6c901f8d973cf02c93017714d",
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1784397652.730286,
+    "mtime": 1784400298.4874196,
     "ast_hash": "2a1e88452227086d59b6ce0dc588b058",
+    "semantic_hash": ""
+  },
+  "infra/bootstrap/.terraform.lock.hcl": {
+    "mtime": 1784406586.7593334,
+    "ast_hash": "e6af36d063f08c03a849ee08cc2f4b06",
+    "semantic_hash": ""
+  },
+  "infra/bootstrap/main.tf": {
+    "mtime": 1784406384.3120887,
+    "ast_hash": "a2039ffd34d731309ebb355e3b67644a",
+    "semantic_hash": ""
+  },
+  "infra/bootstrap/outputs.tf": {
+    "mtime": 1784406379.071409,
+    "ast_hash": "3787ec96c62ce084ac249419f01c591f",
+    "semantic_hash": ""
+  },
+  "infra/bootstrap/variables.tf": {
+    "mtime": 1784406379.0711303,
+    "ast_hash": "ed7a3ad0eaa475af51166935dff876bc",
+    "semantic_hash": ""
+  },
+  "infra/bootstrap/versions.tf": {
+    "mtime": 1784406379.0709603,
+    "ast_hash": "bc5ee652e0aef7d123a4abfccabf6b1a",
+    "semantic_hash": ""
+  },
+  "infra/production/.terraform.lock.hcl": {
+    "mtime": 1784406595.8382595,
+    "ast_hash": "e6af36d063f08c03a849ee08cc2f4b06",
+    "semantic_hash": ""
+  },
+  "infra/production/main.tf": {
+    "mtime": 1784406556.365575,
+    "ast_hash": "013b60927fdf65b28727e8f9e95fd89f",
+    "semantic_hash": ""
+  },
+  "infra/production/outputs.tf": {
+    "mtime": 1784406379.071999,
+    "ast_hash": "7b6c2096c30fafd00e2c1aed33873cbe",
+    "semantic_hash": ""
+  },
+  "infra/production/variables.tf": {
+    "mtime": 1784406441.1865773,
+    "ast_hash": "86590b7c28352bb38ed58a24e85e11ae",
+    "semantic_hash": ""
+  },
+  "infra/production/versions.tf": {
+    "mtime": 1784406379.0715508,
+    "ast_hash": "076beb99ec181eda9fe64a67d5c23033",
+    "semantic_hash": ""
+  },
+  ".github/dependabot.yml": {
+    "mtime": 1784402901.6199894,
+    "ast_hash": "e1703e72ecb6c3c8b3ff3b041e915f06",
+    "semantic_hash": ""
+  },
+  ".github/workflows/terraform.yml": {
+    "mtime": 1784406634.2493634,
+    "ast_hash": "6ba0d9aa63649da1ee6deba03cec0938",
+    "semantic_hash": ""
+  },
+  "CHANGELOG.md": {
+    "mtime": 1784403904.0119963,
+    "ast_hash": "8d638bf2709f1043120a5d15010aad81",
+    "semantic_hash": ""
+  },
+  "docs/DEPLOYMENT.md": {
+    "mtime": 1784406679.5435205,
+    "ast_hash": "03b195face1ad3810bcfc4eac35be2a0",
+    "semantic_hash": ""
+  },
+  "docs/RELEASE.md": {
+    "mtime": 1784406679.5448909,
+    "ast_hash": "0bd5d560972f510f203e5d1f5f12177f",
     "semantic_hash": ""
   }
 }

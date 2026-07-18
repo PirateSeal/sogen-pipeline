@@ -1,16 +1,17 @@
-# Décisions Terraform différées
+# Décisions Terraform
 
-> **Release status — 0.2.0:** Terraform and ECS/Fargate deployment are not
-> implemented in this release. This document records the constraints for the
-> next infrastructure milestone.
+> **Infrastructure status:** Terraform defines the demonstration environment:
+> S3 state, GitHub OIDC, ALB/ACM/Route 53 and ECS/Fargate.
 
-Terraform fera l’objet d’un plan et d’une branche distincts de l’API. Aucun fichier Terraform ni aucune ressource AWS ne sont créés dans le lot `feat/api-monitoring`.
+Terraform est isolé de l'application dans `infra/bootstrap` et
+`infra/production`.
 
 ## Périmètre retenu
 
-- Le futur périmètre Terraform couvre un réseau AWS complet.
-- ECS/Fargate n’est pas inclus dans la première étape Terraform ; son implémentation sera décidée dans le plan d’infrastructure correspondant.
-- Le front React/Vite est également différé : il consommera ultérieurement l’API existante sans modifier le moniteur serveur.
+- Le périmètre couvre un VPC public minimal, un ALB et une task Fargate unique.
+- Les tasks ont une IP publique pour éviter les NAT Gateway, mais leur ingress
+  reste limité au security group de l'ALB.
+- Le front React/Vite et l'API sont déployés dans la même task.
 
 ## État distant
 
@@ -20,10 +21,12 @@ L’état Terraform sera stocké dans S3. Un sous-projet `bootstrap`, exécuté 
 - versionnement activé ;
 - accès public bloqué.
 
-Le détail du verrouillage et des politiques IAM sera défini avec l’implémentation Terraform, afin de rester compatible avec la version de Terraform retenue à ce moment-là.
+Le backend utilise le verrou S3 (`use_lockfile`) et le bootstrap crée également
+le fournisseur OIDC et le rôle GitHub de production.
 
 ## Livraison et contrôle
 
-- La CI validera et planifiera les changements Terraform.
-- L’application se fera seulement via un workflow GitHub `workflow_dispatch` protégé par l’environnement `production`.
-- Aucun `terraform apply` ne sera lancé automatiquement sur un push.
+- La CI valide et scanne Terraform en pull request.
+- Une release taguée, protégée par l’environnement `production`, applique les
+  digests GHCR via OIDC et effectue les smoke tests.
+- `terraform destroy` est exécuté après la démonstration pour maîtriser les coûts.

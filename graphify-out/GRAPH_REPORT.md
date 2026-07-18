@@ -1,16 +1,16 @@
-# Graph Report - slo-watch  (2026-07-18)
+# Graph Report - sogen-pipeline  (2026-07-18)
 
 ## Corpus Check
-- 24 files · ~10,387 words
+- 37 files · ~13,165 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 265 nodes · 302 edges · 39 communities (14 shown, 25 thin omitted)
+- 282 nodes · 321 edges · 37 communities (13 shown, 24 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4d3c8d03`
+- Built from commit: `a105d5f4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -28,7 +28,6 @@
 - SLO Watch Project
 - Recherches et décisions d’architecture
 - 1. Périmètre du produit
-- Décisions Terraform différées
 - verify-compose.sh
 - verify-container.sh
 - EKS with Argo CD
@@ -49,7 +48,6 @@
 - Public GHCR Image
 - In-Memory Measurements
 - Local API Execution
-- SLO Watch
 - TARGETS_JSON
 
 ## God Nodes (most connected - your core abstractions)
@@ -57,10 +55,10 @@
 2. `Exigences d’implémentation` - 14 edges
 3. `scripts` - 13 edges
 4. `Dashboard()` - 12 edges
-5. `Recherches et décisions d’architecture` - 11 edges
+5. `Recherches et décisions d’architecture` - 12 edges
 6. `compilerOptions` - 10 edges
-7. `SLO Watch Project` - 8 edges
-8. `AppConfig` - 7 edges
+7. `AppConfig` - 7 edges
+8. `SLO Watch` - 7 edges
 9. `Consignes de l’exercice` - 7 edges
 10. `loadConfig()` - 6 edges
 
@@ -84,7 +82,7 @@
 - **Monitoring Runtime Contract** — docs_implementation_requirements_slo_watch, docs_implementation_requirements_runtime_configuration, docs_implementation_requirements_api_endpoints, docs_implementation_requirements_ssrf_protections, readme_in_memory_measurements [INFERRED 0.85]
 - **Terraform Delivery Controls** — docs_terraform_decisions_deferred_terraform, docs_terraform_decisions_s3_remote_state, docs_terraform_decisions_manual_apply, docs_implementation_requirements_github_actions_pipeline [EXTRACTED 1.00]
 
-## Communities (39 total, 25 thin omitted)
+## Communities (37 total, 24 thin omitted)
 
 ### Community 0 - "Runtime Package"
 Cohesion: 0.08
@@ -95,60 +93,56 @@ Cohesion: 0.05
 Nodes (37): eslint, @eslint/js, jsdom, devDependencies, eslint, @eslint/js, jsdom, react (+29 more)
 
 ### Community 2 - "Monitoring Types"
-Cohesion: 0.19
-Nodes (11): MonitoredTarget, FetchProbeClient, MonitorDependencies, MonitorSnapshot, ProbeClient, ProbeResult, TargetHistory, TargetSnapshot (+3 more)
+Cohesion: 0.21
+Nodes (10): MonitoredTarget, FetchProbeClient, MonitorDependencies, ProbeClient, ProbeResult, TargetHistory, TargetSnapshot, TargetState (+2 more)
 
 ### Community 3 - "TypeScript Configuration"
 Cohesion: 0.15
 Nodes (12): src/**/*.ts, compilerOptions, esModuleInterop, forceConsistentCasingInFileNames, module, moduleResolution, outDir, rootDir (+4 more)
 
 ### Community 4 - "HTTP API and Metrics"
-Cohesion: 0.06
-Nodes (31): 10. Plan des quatre heures, 11. Plan de commits, 12. Démonstration en deux minutes, 13. Questions de soutenance, 2. Tests et qualité, 3. Image Docker, 4. Pipeline GitHub Actions, 5. SonarQube Cloud (+23 more)
+Cohesion: 0.05
+Nodes (37): 10. Plan des quatre heures, 11. Plan de commits, 12. Démonstration en deux minutes, 13. Questions de soutenance, 1. Périmètre du produit, 2. Tests et qualité, 3. Image Docker, 4. Pipeline GitHub Actions (+29 more)
 
 ### Community 5 - "Monitoring Service"
 Cohesion: 0.10
-Nodes (19): AppDependencies, buildApp(), AppConfig, Environment, loadConfig(), parseNumber(), parsePositiveInteger(), parseTargets() (+11 more)
+Nodes (20): AppDependencies, buildApp(), AppConfig, Environment, loadConfig(), parseNumber(), parsePositiveInteger(), parseTargets() (+12 more)
 
 ### Community 8 - "Runtime Configuration"
 Cohesion: 0.13
 Nodes (22): getHistory(), getJson(), getStatus(), ProbeResult, StatusSnapshot, TargetHistory, TargetSnapshot, TargetState (+14 more)
 
 ### Community 11 - "SLO Watch Project"
-Cohesion: 0.11
-Nodes (15): Consignes de l’exercice, Contraintes confirmées, Définition de « terminé », Lecture des attentes, Livrable attendu, Règles de preuve, Utilisation responsable de l’IA, CI et releases (+7 more)
+Cohesion: 0.06
+Nodes (25): Bootstrap unique, Déploiement AWS économique, Livraison, rollback et coût, Consignes de l’exercice, Contraintes confirmées, Définition de « terminé », Lecture des attentes, Livrable attendu (+17 more)
 
 ### Community 12 - "Recherches et décisions d’architecture"
 Cohesion: 0.11
-Nodes (18): 1. ECS/Fargate plutôt qu’EKS/Argo CD, 2. GHCR public plutôt qu’ECR ou Docker Hub, 3. OIDC plutôt que des clés AWS statiques, 4. Sonar, Trivy et Dependabot, 5. Pourquoi l’application justifie Trivy, 6. Traçabilité et promotion, 7. Coût hors AWS, 8. Compromis à présenter oralement (+10 more)
+Nodes (19): 1. ECS/Fargate plutôt qu’EKS/Argo CD, 2. GHCR public plutôt qu’ECR ou Docker Hub, 3. OIDC plutôt que des clés AWS statiques, 4. Sonar, Trivy et Dependabot, 5. Pourquoi l’application justifie Trivy, 6. Traçabilité et promotion, 7.1 Coût AWS maîtrisé, 7. Coût hors AWS (+11 more)
 
 ### Community 13 - "1. Périmètre du produit"
-Cohesion: 0.33
-Nodes (6): 1. Périmètre du produit, Application retenue : SLO Watch, Configuration, Endpoints obligatoires, Stack recommandée, État
-
-### Community 14 - "Décisions Terraform différées"
-Cohesion: 0.40
-Nodes (4): Décisions Terraform différées, Livraison et contrôle, Périmètre retenu, État distant
+Cohesion: 0.22
+Nodes (8): [0.1.0] - 2026-07-18, [0.2.0] - 2026-07-18, Added, Added, Changed, Changed, Changelog, [Unreleased]
 
 ## Knowledge Gaps
-- **145 isolated node(s):** `name`, `version`, `private`, `description`, `type` (+140 more)
+- **154 isolated node(s):** `name`, `version`, `private`, `description`, `type` (+149 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Exigences d’implémentation` connect `HTTP API and Metrics` to `SLO Watch Project`, `1. Périmètre du produit`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
+- **Why does `Exigences d’implémentation` connect `HTTP API and Metrics` to `SLO Watch Project`?**
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `Development Tooling` to `Runtime Package`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
 - **Why does `Recherches et décisions d’architecture` connect `Recherches et décisions d’architecture` to `SLO Watch Project`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
-  _145 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _154 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Runtime Package` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Development Tooling` be split into smaller, more focused modules?**
   _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
 - **Should `HTTP API and Metrics` be split into smaller, more focused modules?**
-  _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._

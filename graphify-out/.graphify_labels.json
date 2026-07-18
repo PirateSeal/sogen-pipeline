@@ -13,7 +13,6 @@
   "11": "SLO Watch Project",
   "12": "Recherches et décisions d’architecture",
   "13": "1. Périmètre du produit",
-  "14": "Décisions Terraform différées",
   "15": "verify-compose.sh",
   "16": "verify-container.sh",
   "17": "EKS with Argo CD",
@@ -34,7 +33,6 @@
   "32": "Public GHCR Image",
   "33": "In-Memory Measurements",
   "34": "Local API Execution",
-  "35": "SLO Watch",
   "36": "TARGETS_JSON",
   "37": "vitest.config.ts",
   "38": "vite.config.ts"

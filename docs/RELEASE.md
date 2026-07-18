@@ -11,8 +11,9 @@ Version 0.2.0 contains the implemented application delivery baseline:
 - weekly Dependabot version updates for npm and GitHub Actions;
 - release publication to GHCR and a generated GitHub Release for `v*` tags.
 
-Terraform and ECS/Fargate deployment are not part of this release. They remain
-an explicitly documented follow-up rather than an implied delivery promise.
+Terraform provisions the ECS/Fargate environment after image publication. The
+protected `production` environment supplies short-lived AWS credentials through
+OIDC; no long-lived AWS key is stored in GitHub.
 
 ## Release procedure
 
@@ -28,7 +29,9 @@ an explicitly documented follow-up rather than an implied delivery promise.
 
 5. Monitor the tag workflow. It builds, verifies, scans, and publishes the API
    and web images before creating the GitHub Release.
-6. Verify the release page and the GHCR version and short-SHA image tags.
+6. Approve the production deployment, then verify ECS stability and the HTTPS
+   smoke tests on `/healthz` and `/api/status`.
+7. Verify the release page, GHCR digests, signatures and attestations.
 
 ## Rollback
 
