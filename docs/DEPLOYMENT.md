@@ -22,6 +22,11 @@ Reporter les outputs dans les variables GitHub du dépôt :
 
 Créer ensuite l'environnement GitHub protégé `production`.
 
+Le trust OIDC utilise le sujet GitHub immuable, composé des identifiants
+numériques du propriétaire et du dépôt, et reste limité à cet environnement.
+Si le dépôt est transféré ou recréé, mettre à jour `github_owner_id` et
+`github_repository_id` avant de rejouer le bootstrap.
+
 ## Livraison, rollback et coût
 
 Un tag `v*` publie et signe les images GHCR, génère les SBOM/attestations,

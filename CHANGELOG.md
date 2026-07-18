@@ -7,6 +7,13 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-07-18
+
+### Fixed
+
+- Trust GitHub Actions' immutable OIDC subject, including the numeric owner and
+  repository identifiers, while retaining the `production` environment scope.
+
 ## [1.0.1] - 2026-07-18
 
 ### Fixed

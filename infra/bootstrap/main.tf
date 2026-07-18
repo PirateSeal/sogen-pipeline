@@ -3,6 +3,9 @@ data "aws_caller_identity" "current" {}
 locals {
   state_bucket_name = "${var.project_name}-tfstate-${data.aws_caller_identity.current.account_id}"
   github_oidc_url   = "https://token.actions.githubusercontent.com"
+  github_owner      = split("/", var.github_repository)[0]
+  github_repo       = split("/", var.github_repository)[1]
+  github_subject    = "repo:${local.github_owner}@${var.github_owner_id}/${local.github_repo}@${var.github_repository_id}:environment:production"
 }
 
 resource "aws_s3_bucket" "state" {
@@ -73,7 +76,7 @@ data "aws_iam_policy_document" "github_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:environment:production"]
+      values   = [local.github_subject]
     }
   }
 }

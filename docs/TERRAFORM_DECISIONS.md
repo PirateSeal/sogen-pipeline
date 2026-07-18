@@ -22,7 +22,10 @@ L’état Terraform sera stocké dans S3. Un sous-projet `bootstrap`, exécuté 
 - accès public bloqué.
 
 Le backend utilise le verrou S3 (`use_lockfile`) et le bootstrap crée également
-le fournisseur OIDC et le rôle GitHub de production.
+le fournisseur OIDC et le rôle GitHub de production. La confiance IAM compare
+le sujet OIDC immuable (nom et identifiant numérique du propriétaire et du
+dépôt) et exige l'environnement GitHub `production` afin d'éviter qu'un dépôt
+homonyme ou une autre référence puisse assumer le rôle.
 
 ## Livraison et contrôle
 
