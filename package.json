@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "start": "node dist/server.js",
     "test": "vitest run",
+    "test:container": "bash scripts/verify-container.sh slo-watch:0.1.0",
     "test:coverage": "vitest run --coverage"
   },
   "engines": {
