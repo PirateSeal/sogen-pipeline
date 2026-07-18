@@ -33,6 +33,10 @@ OIDC; no long-lived AWS key is stored in GitHub.
    smoke tests on `/healthz` and `/api/status`.
 7. Verify the release page, GHCR digests, signatures and attestations.
 
+SonarQube Cloud quality gates run on pull requests and `master`. The tag points
+to a commit that has already passed this gate, so the release workflow does not
+submit a duplicate tag analysis.
+
 ## Rollback
 
 Do not overwrite release tags. To revert a deployment, select a previously

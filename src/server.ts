@@ -23,8 +23,10 @@ process.once('SIGTERM', () => {
   void shutdown();
 });
 
-start().catch(async (error: unknown) => {
+try {
+  await start();
+} catch (error: unknown) {
   app.log.error(error);
   await shutdown();
   process.exitCode = 1;
-});
+}

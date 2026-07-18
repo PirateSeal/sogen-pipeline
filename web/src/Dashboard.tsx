@@ -50,6 +50,24 @@ const stateLabels: Record<TargetSnapshot['state'], string> = {
   unknown: 'Awaiting data',
 };
 
+const stateDotClasses: Record<TargetSnapshot['state'], string> = {
+  degraded: 'bg-[var(--dashboard-warning)]',
+  healthy: 'bg-[var(--dashboard-success)]',
+  unavailable: 'bg-[var(--dashboard-critical)]',
+  unknown: 'bg-[var(--dashboard-muted)]',
+};
+
+const stateTextClasses: Record<TargetSnapshot['state'], string> = {
+  degraded: 'text-[var(--dashboard-warning)]',
+  healthy: 'text-[var(--dashboard-success)]',
+  unavailable: 'text-[var(--dashboard-critical)]',
+  unknown: 'text-[var(--dashboard-muted)]',
+};
+
+function oppositeTheme(theme: Theme): Theme {
+  return theme === 'dark' ? 'light' : 'dark';
+}
+
 function percentage(value: number | null): string {
   return value === null ? '—' : `${(value * 100).toFixed(2)}%`;
 }
@@ -124,10 +142,10 @@ export function timelineX(timestamp: number, windowSeconds: number, now: number)
 function HistoryChart({
   results,
   windowSeconds,
-}: {
-  results: ProbeResult[];
+}: Readonly<{
+  results: readonly ProbeResult[];
   windowSeconds: number;
-}) {
+}>) {
   if (results.length === 0) {
     return <div className="my-6 grid aspect-[5/2] place-items-center rounded-lg border border-dashed border-[var(--dashboard-border)] text-center text-sm text-[var(--dashboard-muted)]">No probes have been retained for this target yet.</div>;
   }
@@ -189,21 +207,21 @@ function TargetCard({
   selected,
   target,
   onSelect,
-}: {
+}: Readonly<{
   selected: boolean;
   target: TargetSnapshot;
   onSelect: () => void;
-}) {
+}>) {
   return (
     <button
       className={`grid w-full grid-cols-[auto_1fr] gap-x-3 gap-y-1 rounded-xl border p-4 text-left transition-colors ${selected ? 'border-[var(--dashboard-primary)] bg-[var(--dashboard-primary-subtle)]' : 'border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] hover:bg-[var(--dashboard-primary-subtle)]'}`}
       onClick={onSelect}
       type="button"
     >
-      <span aria-hidden="true" className={`mt-1.5 h-2.5 w-2.5 rounded-full ${target.state === 'healthy' ? 'bg-[var(--dashboard-success)]' : target.state === 'degraded' ? 'bg-[var(--dashboard-warning)]' : target.state === 'unavailable' ? 'bg-[var(--dashboard-critical)]' : 'bg-[var(--dashboard-muted)]'}`} />
+      <span aria-hidden="true" className={`mt-1.5 h-2.5 w-2.5 rounded-full ${stateDotClasses[target.state]}`} />
       <span className="flex items-center justify-between gap-3">
         <strong>{target.id}</strong>
-        <span className={`text-xs font-bold uppercase tracking-wider ${target.state === 'healthy' ? 'text-[var(--dashboard-success)]' : target.state === 'degraded' ? 'text-[var(--dashboard-warning)]' : target.state === 'unavailable' ? 'text-[var(--dashboard-critical)]' : 'text-[var(--dashboard-muted)]'}`}>{stateLabels[target.state]}</span>
+        <span className={`text-xs font-bold uppercase tracking-wider ${stateTextClasses[target.state]}`}>{stateLabels[target.state]}</span>
       </span>
       <span className="col-start-2 truncate text-xs text-[var(--dashboard-muted)]">{target.url}</span>
       <span className="col-start-2 mt-2 flex flex-wrap gap-x-8 gap-y-2 text-sm">
@@ -263,12 +281,12 @@ export function Dashboard() {
         <div><p className="text-xs font-bold uppercase tracking-[.16em] text-[var(--dashboard-secondary)]">Reliability dashboard</p><h1 className="mt-1 text-3xl font-semibold tracking-tight">SLO Watch</h1></div>
         <div className="flex w-full items-center justify-between gap-3 text-left text-sm text-[var(--dashboard-muted)] sm:w-auto sm:justify-normal sm:text-right">
           <p>Version <strong className="text-[var(--dashboard-foreground)]">{status?.appVersion ?? '—'}</strong><br /><span>Updated {dateTime(updatedAt)}</span></p>
-          <button aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] text-[var(--dashboard-foreground)] transition-colors hover:bg-[var(--dashboard-secondary-subtle)]" onClick={() => setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} type="button"><ThemeIcon theme={theme} /></button>
+          <button aria-label={`Switch to ${oppositeTheme(theme)} theme`} className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] text-[var(--dashboard-foreground)] transition-colors hover:bg-[var(--dashboard-secondary-subtle)]" onClick={() => setTheme((currentTheme) => oppositeTheme(currentTheme))} title={`Switch to ${oppositeTheme(theme)} theme`} type="button"><ThemeIcon theme={theme} /></button>
           <button aria-label="Refresh monitoring data" className="grid h-9 w-9 place-items-center rounded-lg bg-[var(--dashboard-primary)] text-[var(--dashboard-primary-contrast)] shadow-sm transition-[filter] hover:brightness-95 disabled:cursor-wait disabled:opacity-50" disabled={isLoading} onClick={() => void load()} title="Refresh monitoring data" type="button"><RefreshIcon /></button>
         </div>
       </header>
       {error && <div className="shrink-0 rounded-lg border border-[var(--dashboard-critical)] bg-[var(--dashboard-critical-subtle)] px-4 py-2 text-sm" role="alert">{error} {status ? 'Showing the latest available data.' : ''}</div>}
-      {status?.targets.some((target) => target.state === 'unavailable' || target.state === 'unknown') && <div className="shrink-0 rounded-lg border border-[var(--dashboard-warning)] bg-[var(--dashboard-warning-subtle)] px-4 py-2 text-sm" role="status">One or more monitored targets need attention.</div>}
+      {status?.targets.some((target) => target.state === 'unavailable' || target.state === 'unknown') && <output className="shrink-0 rounded-lg border border-[var(--dashboard-warning)] bg-[var(--dashboard-warning-subtle)] px-4 py-2 text-sm">One or more monitored targets need attention.</output>}
       <section aria-label="SLO summary" className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {[['Global SLI', percentage(status?.globalSli ?? null), 'Past hour'], ['SLO target', status ? percentage(status.sloTarget) : '—', 'Availability objective'], ['Healthy targets', String(counts.healthy), `${status?.targets.length ?? 0} configured`], ['Need attention', String(counts.degraded + counts.unavailable + counts.unknown), 'Degraded, unavailable, or waiting']].map(([label, value, detail]) => <article className="rounded-xl border border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] px-5 py-3 shadow-sm" key={label}><p className="text-sm text-[var(--dashboard-muted)]">{label}</p><strong className="my-1 block text-2xl tracking-tight">{value}</strong><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">{detail}</small></article>)}
       </section>
@@ -279,7 +297,28 @@ export function Dashboard() {
         </section>
         <aside aria-labelledby="details-heading" className="flex min-h-80 flex-col overflow-hidden rounded-xl border border-[var(--dashboard-border)] bg-[var(--dashboard-surface-raised)] p-5 shadow-sm lg:min-h-0">
           <p className="text-xs font-bold uppercase tracking-[.16em] text-[var(--dashboard-secondary)]">Selected target</p><h2 className="mt-1 text-xl font-semibold" id="details-heading">{selectedTarget?.id ?? 'No target selected'}</h2>
-          {selectedTarget && <><div className="mt-3 flex items-center gap-2 font-bold"><span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${selectedTarget.state === 'healthy' ? 'bg-[var(--dashboard-success)]' : selectedTarget.state === 'degraded' ? 'bg-[var(--dashboard-warning)]' : selectedTarget.state === 'unavailable' ? 'bg-[var(--dashboard-critical)]' : 'bg-[var(--dashboard-muted)]'}`} /><span>{stateLabels[selectedTarget.state]}</span></div><p className="mt-1 truncate text-xs text-[var(--dashboard-muted)]">{selectedTarget.url}</p><HistoryChart results={history?.results ?? []} windowSeconds={history?.windowSeconds ?? status?.windowSeconds ?? 3600} /><div className="mt-auto grid shrink-0 gap-3"><div className="grid grid-cols-3 gap-2"><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Latest latency</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: latencyColor(selectedTarget.lastProbe) }} />{selectedTarget.lastProbe ? `${selectedTarget.lastProbe.latencyMs} ms` : '—'}</strong></div><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">HTTP response</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: httpStatusColor(selectedTarget.lastProbe?.statusCode) }} />{selectedTarget.lastProbe?.statusCode ?? '—'}</strong></div><div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Last probe</small><strong className="mt-1 block text-lg">{selectedTarget.lastProbe ? 'Current' : 'Pending'}</strong></div></div><div className="rounded-lg border border-[var(--dashboard-border)] bg-[var(--dashboard-surface)] p-4"><div className="flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.14em] text-[var(--dashboard-secondary)]">Window reliability</p><strong className="mt-1 block text-2xl tracking-tight" style={{ color: reliabilityColor(selectedTarget.sli) }}>{percentage(selectedTarget.sli)}</strong></div><div className="text-right text-xs text-[var(--dashboard-muted)]"><p>{selectedTarget.successCount} successful probes</p><p>{selectedTarget.failureCount} failed probes</p></div></div><div aria-label="Success rate over the retained window" className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--dashboard-border)]" role="progressbar" aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.round((selectedTarget.sli ?? 0) * 100)}><div className="h-full rounded-full" style={{ background: reliabilityColor(selectedTarget.sli), width: `${(selectedTarget.sli ?? 0) * 100}%` }} /></div></div><p className="text-xs text-[var(--dashboard-muted)]">Latest probe: {dateTime(selectedTarget.lastProbe?.timestamp)}</p></div></>}
+          {selectedTarget && (
+            <>
+              <div className="mt-3 flex items-center gap-2 font-bold">
+                <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${stateDotClasses[selectedTarget.state]}`} />
+                <span>{stateLabels[selectedTarget.state]}</span>
+              </div>
+              <p className="mt-1 truncate text-xs text-[var(--dashboard-muted)]">{selectedTarget.url}</p>
+              <HistoryChart results={history?.results ?? []} windowSeconds={history?.windowSeconds ?? status?.windowSeconds ?? 3600} />
+              <div className="mt-auto grid shrink-0 gap-3">
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Latest latency</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: latencyColor(selectedTarget.lastProbe) }} />{selectedTarget.lastProbe ? `${selectedTarget.lastProbe.latencyMs} ms` : '—'}</strong></div>
+                  <div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">HTTP response</small><strong className="mt-1 flex items-center gap-2 text-lg"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: httpStatusColor(selectedTarget.lastProbe?.statusCode) }} />{selectedTarget.lastProbe?.statusCode ?? '—'}</strong></div>
+                  <div className="rounded-lg bg-[var(--dashboard-surface)] p-3"><small className="text-[10px] font-bold uppercase tracking-wider text-[var(--dashboard-muted)]">Last probe</small><strong className="mt-1 block text-lg">{selectedTarget.lastProbe ? 'Current' : 'Pending'}</strong></div>
+                </div>
+                <div className="rounded-lg border border-[var(--dashboard-border)] bg-[var(--dashboard-surface)] p-4">
+                  <div className="flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.14em] text-[var(--dashboard-secondary)]">Window reliability</p><strong className="mt-1 block text-2xl tracking-tight" style={{ color: reliabilityColor(selectedTarget.sli) }}>{percentage(selectedTarget.sli)}</strong></div><div className="text-right text-xs text-[var(--dashboard-muted)]"><p>{selectedTarget.successCount} successful probes</p><p>{selectedTarget.failureCount} failed probes</p></div></div>
+                  <progress aria-label="Success rate over the retained window" className="mt-3 h-2 w-full overflow-hidden rounded-full bg-[var(--dashboard-border)]" max={100} style={{ accentColor: reliabilityColor(selectedTarget.sli) }} value={Math.round((selectedTarget.sli ?? 0) * 100)} />
+                </div>
+                <p className="text-xs text-[var(--dashboard-muted)]">Latest probe: {dateTime(selectedTarget.lastProbe?.timestamp)}</p>
+              </div>
+            </>
+          )}
         </aside>
       </section>
     </main>
