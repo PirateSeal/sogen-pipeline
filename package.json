@@ -16,7 +16,7 @@
     "test": "vitest run",
     "test:container": "bash scripts/verify-container.sh",
     "test:compose": "bash scripts/verify-compose.sh",
-    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=html --coverage.reporter=json-summary"
+    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=html --coverage.reporter=json-summary --coverage.reporter=lcov"
   },
   "engines": {
     "node": ">=24"
