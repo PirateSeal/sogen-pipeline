@@ -27,7 +27,7 @@ function parseNumber(
 
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) {
-    throw new Error(`${name} must be a finite number.`);
+    throw new TypeError(`${name} must be a finite number.`);
   }
 
   return parsed;
@@ -82,7 +82,7 @@ function parseTargets(value: string | undefined): MonitoredTarget[] {
     ids.add(id);
 
     if (typeof url !== 'string') {
-      throw new Error(`TARGETS_JSON entry ${index} url must be a string.`);
+      throw new TypeError(`TARGETS_JSON entry ${index} url must be a string.`);
     }
 
     let parsedUrl: URL;

@@ -59,6 +59,8 @@ describe('Dashboard', () => {
     expect(await screen.findByText('Global SLI')).toBeInTheDocument();
     expect(screen.getByText('Unavailable')).toBeInTheDocument();
     expect(screen.getByText('11 ms')).toBeInTheDocument();
+    expect(screen.getByText('One or more monitored targets need attention.').tagName).toBe('OUTPUT');
+    expect(screen.getByRole('progressbar', { name: 'Success rate over the retained window' })).toHaveAttribute('value', '100');
     expect(screen.getByTestId('dashboard-shell')).toHaveClass('min-h-dvh', 'overflow-x-hidden');
     expect(screen.getByTestId('target-list')).toHaveClass('lg:overflow-y-auto');
     fireEvent.click(screen.getByRole('button', { name: /checkout/i }));
