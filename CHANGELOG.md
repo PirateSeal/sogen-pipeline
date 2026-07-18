@@ -7,6 +7,13 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-07-18
+
+### Fixed
+
+- Publish container SBOM and provenance attestations with untagged OCI subject
+  names so the release workflow can push them to GHCR and continue to ECS.
+
 ## [1.0.0] - 2026-07-18
 
 ### Added

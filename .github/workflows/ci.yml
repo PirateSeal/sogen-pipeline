@@ -125,8 +125,10 @@ jobs:
           {
             echo "VERSION=$version"
             echo "SHORT_SHA=$short_sha"
+            echo "API_IMAGE_NAME=$api_image_name"
             echo "API_IMAGE_SHA=$api_image_name:$short_sha"
             echo "API_IMAGE_VERSION=$api_image_name:$version"
+            echo "WEB_IMAGE_NAME=$web_image_name"
             echo "WEB_IMAGE_SHA=$web_image_name:$short_sha"
             echo "WEB_IMAGE_VERSION=$web_image_name:$version"
           } >> "$GITHUB_ENV"
@@ -227,7 +229,7 @@ jobs:
       - name: Attest API SBOM
         uses: actions/attest-sbom@10926c72720ffc3f7b666661c8e55b1344e2a365 # v2
         with:
-          subject-name: ${{ env.API_IMAGE_SHA }}
+          subject-name: ${{ env.API_IMAGE_NAME }}
           subject-digest: ${{ env.API_IMAGE_DIGEST_SHA }}
           sbom-path: api.sbom.cdx.json
           push-to-registry: true
@@ -235,7 +237,7 @@ jobs:
       - name: Attest dashboard SBOM
         uses: actions/attest-sbom@10926c72720ffc3f7b666661c8e55b1344e2a365 # v2
         with:
-          subject-name: ${{ env.WEB_IMAGE_SHA }}
+          subject-name: ${{ env.WEB_IMAGE_NAME }}
           subject-digest: ${{ env.WEB_IMAGE_DIGEST_SHA }}
           sbom-path: web.sbom.cdx.json
           push-to-registry: true
@@ -243,14 +245,14 @@ jobs:
       - name: Attest API provenance
         uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
         with:
-          subject-name: ${{ env.API_IMAGE_SHA }}
+          subject-name: ${{ env.API_IMAGE_NAME }}
           subject-digest: ${{ env.API_IMAGE_DIGEST_SHA }}
           push-to-registry: true
 
       - name: Attest dashboard provenance
         uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
         with:
-          subject-name: ${{ env.WEB_IMAGE_SHA }}
+          subject-name: ${{ env.WEB_IMAGE_NAME }}
           subject-digest: ${{ env.WEB_IMAGE_DIGEST_SHA }}
           push-to-registry: true
 
