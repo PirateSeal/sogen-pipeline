@@ -40,6 +40,23 @@ jobs:
       - name: Build API
         run: npm run build
 
+      - name: Write quality summary
+        shell: bash
+        run: |
+          node <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import { readFileSync } from 'node:fs';
+
+          const coverage = JSON.parse(readFileSync('coverage/coverage-summary.json', 'utf8')).total;
+          const metric = (name) => `${coverage[name].pct}%`;
+
+          console.log('## Quality checks');
+          console.log('All API checks passed: dependency installation, lint, Vitest coverage, and TypeScript build.');
+          console.log('');
+          console.log('| Statements | Branches | Functions | Lines |');
+          console.log('| ---: | ---: | ---: | ---: |');
+          console.log(`| ${metric('statements')} | ${metric('branches')} | ${metric('functions')} | ${metric('lines')} |`);
+          EOF
+
   release:
     name: Build and publish release
     needs: quality
@@ -97,3 +114,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$VERSION" --verify-tag --title "$VERSION" --generate-notes
+
+      - name: Write release summary
+        shell: bash
+        run: |
+          {
+            echo "## Release published"
+            echo
+            echo "| Item | Reference |"
+            echo "| --- | --- |"
+            echo "| Git tag | [\`$VERSION\`](${{ github.server_url }}/${{ github.repository }}/releases/tag/$VERSION) |"
+            echo "| Commit | [\`$SHORT_SHA\`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) |"
+            echo "| Container image | \`$IMAGE_VERSION\` |"
+            echo "| Immutable image tag | \`$IMAGE_SHA\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

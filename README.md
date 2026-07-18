@@ -39,7 +39,7 @@ L’image est publique dans `ghcr.io/<owner>/<image>`. La CI publie avec le `GIT
 
 ## CI et releases
 
-Le workflow [CI](.github/workflows/ci.yml) exécute `lint`, les tests avec couverture et la compilation sur les pull requests vers `master` ainsi que sur les push vers cette branche. Un tag Git `v*` déclenche ensuite la construction d’une image unique, son test de conteneur, sa publication dans GHCR avec les tags de version et de SHA court, puis la création d’une GitHub Release avec notes générées automatiquement.
+Le workflow [CI](.github/workflows/ci.yml) exécute `lint`, les tests avec couverture et la compilation sur les pull requests vers `master` ainsi que sur les push vers cette branche. Son résumé GitHub Actions affiche les taux de couverture obtenus. Un tag Git `v*` déclenche ensuite la construction d’une image unique, son test de conteneur, sa publication dans GHCR avec les tags de version et de SHA court, puis la création d’une GitHub Release avec notes générées automatiquement. Le résumé de ce job relie le tag, le commit et les deux références d’image publiées.
 
 Les seules actions réutilisées sont les actions GitHub officielles `actions/checkout` et `actions/setup-node`, épinglées à des SHA immuables. Docker, l’authentification GHCR et la création de release passent par les exécutables natifs du runner (`docker` et `gh`) : aucune action tierce ni action locale n’est nécessaire à ce stade. Si un besoin non couvert apparaît, une action composite locale, minimale et versionnée dans le dépôt sera privilégiée et documentée avec ses entrées, sorties et permissions.
 

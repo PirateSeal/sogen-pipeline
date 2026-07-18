@@ -11,7 +11,7 @@
     "start": "node dist/server.js",
     "test": "vitest run",
     "test:container": "bash scripts/verify-container.sh",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=html --coverage.reporter=json-summary"
   },
   "engines": {
     "node": ">=24"
