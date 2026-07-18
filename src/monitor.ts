@@ -34,7 +34,7 @@ export interface MonitorDependencies {
   probeClient?: ProbeClient;
 }
 
-class FetchProbeClient implements ProbeClient {
+export class FetchProbeClient implements ProbeClient {
   async probe(target: MonitoredTarget, timeoutMs: number): Promise<ProbeResult> {
     const startedAt = Date.now();
     const controller = new AbortController();
