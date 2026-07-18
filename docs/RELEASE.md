@@ -30,6 +30,10 @@ an explicitly documented follow-up rather than an implied delivery promise.
    and web images before creating the GitHub Release.
 6. Verify the release page and the GHCR version and short-SHA image tags.
 
+SonarQube Cloud quality gates run on pull requests and `master`. The tag points
+to a commit that has already passed this gate, so the release workflow does not
+submit a duplicate tag analysis.
+
 ## Rollback
 
 Do not overwrite release tags. To revert a deployment, select a previously

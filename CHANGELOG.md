@@ -24,6 +24,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   definitions 26, and TypeScript 6.0.3. TypeScript 7 is intentionally deferred
   until the `typescript-eslint` compatibility range supports it.
 
+### Fixed
+
+- Run the SonarQube Cloud quality gate on pull requests and `master` only,
+  avoiding an unsupported duplicate tag-branch analysis during releases.
+
 ## [0.1.0] - 2026-07-18
 
 ### Added
