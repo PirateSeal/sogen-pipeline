@@ -29,5 +29,20 @@ export function buildApp({ config, monitor }: AppDependencies) {
     status: 'ready',
   }));
 
+  app.get('/api/status', async (_request, reply) => {
+    const snapshot = monitor.snapshot();
+    const hasUnavailableTarget = snapshot.targets.some(
+      (target) => target.state === 'unknown' || target.state === 'unavailable',
+    );
+
+    return reply.code(hasUnavailableTarget ? 503 : 200).send({
+      ...snapshot,
+      appVersion: config.appVersion,
+      checkIntervalMs: config.checkIntervalMs,
+      sloTarget: config.sloTarget,
+      windowSeconds: 60 * 60,
+    });
+  });
+
   return app;
 }
