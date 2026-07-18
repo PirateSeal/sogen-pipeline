@@ -5,8 +5,8 @@ and latency of configured HTTP targets.
 
 **Current release:** `0.2.0` (release preparation). The application, quality
 gates, dependency maintenance, and container-release workflow are implemented;
-Terraform and ECS/Fargate deployment remain deliberately out of scope for this
-release.
+ Terraform and ECS/Fargate deployment are defined as infrastructure as code for
+ the production demonstration.
 
 ## Documentation
 
@@ -14,7 +14,8 @@ release.
 - [Implementation requirements](docs/IMPLEMENTATION_REQUIREMENTS.md) — functional scope, CI/CD, security and cloud design.
 - [Architecture research](docs/ARCHITECTURE_RESEARCH.md) — selected approaches, alternatives and sources.
 - [Release guide](docs/RELEASE.md) — the verified path from `master` to a tagged release.
-- [Terraform decisions](docs/TERRAFORM_DECISIONS.md) — explicitly deferred infrastructure scope.
+- [Deployment guide](docs/DEPLOYMENT.md) — bootstrap, production delivery, rollback and cleanup.
+- [Terraform decisions](docs/TERRAFORM_DECISIONS.md) — infrastructure scope and cost trade-offs.
 
 ## Product scope
 

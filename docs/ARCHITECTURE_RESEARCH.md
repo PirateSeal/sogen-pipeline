@@ -2,7 +2,7 @@
 
 > **Release status — 0.2.0:** the selected GitHub Actions, SonarQube Cloud,
 > Trivy, Dependabot, and GHCR approach is implemented. The ECS/Fargate choice
-> remains an architecture decision for a future infrastructure delivery.
+> is implemented through Terraform for a low-cost production demonstration.
 
 ## Décision synthétique
 
@@ -17,11 +17,11 @@ GitHub public
      -> Docker Build
      -> Trivy image
      -> GitHub Container Registry (GHCR)
-     -> Amazon ECS / Fargate
+     -> Amazon ECS / Fargate behind ALB + ACM
      -> smoke test HTTP
 ```
 
-GitHub Actions s’authentifie auprès d’AWS avec OIDC pour le déploiement. L’image est construite une seule fois, analysée, publiée dans GHCR avec un tag SHA puis déployée sans reconstruction. La publication GHCR utilise le `GITHUB_TOKEN` éphémère et les commandes Docker disponibles sur le runner.
+GitHub Actions s’authentifie auprès d’AWS avec OIDC pour le déploiement. L’image est construite une seule fois, analysée, publiée dans GHCR avec un tag SHA puis déployée par digest sans reconstruction. La publication GHCR utilise le `GITHUB_TOKEN` éphémère et les commandes Docker disponibles sur le runner.
 
 ## 1. ECS/Fargate plutôt qu’EKS/Argo CD
 
@@ -146,6 +146,17 @@ Le scénario peut rester à **0 CAD hors AWS** si :
 - GitHub Packages héberge l’image GHCR publique réellement déployée.
 
 Les quotas et conditions peuvent évoluer : vérifier les pages officielles avant le démarrage.
+
+## 7.1 Coût AWS maîtrisé
+
+L'environnement conserve un ALB, ACM et Route 53 afin de démontrer HTTPS et un
+nom de domaine stable. Il évite les NAT Gateway en plaçant la task Fargate dans
+un subnet public, avec un security group n'autorisant le trafic entrant que
+depuis l'ALB. Une seule task est maintenue et les logs expirent après sept jours.
+
+AMP, ADOT et Amazon Managed Grafana sont reportés : ce dernier n'est pas
+disponible dans `ca-central-1` et une licence mensuelle est disproportionnée
+pour une démonstration courte. Cette évolution reste l'issue #16.
 
 Références :
 

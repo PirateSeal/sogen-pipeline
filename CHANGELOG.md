@@ -7,6 +7,33 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-18
+
+### Added
+
+- Terraform bootstrap for the encrypted and versioned S3 state backend and the
+  GitHub OIDC production role.
+- Cost-conscious AWS production platform in `ca-central-1` with a public ALB,
+  ACM/Route 53 HTTPS, and one ECS/Fargate task running the API and dashboard.
+- Pull-request Terraform validation and Trivy scanning, plus tagged-release
+  deployment with immutable GHCR digests and HTTPS smoke tests.
+- Keyless Cosign signatures, CycloneDX SBOMs, and GitHub provenance and SBOM
+  attestations for both release images.
+- Deployment, rollback, destruction, architecture, and cost documentation.
+
+### Changed
+
+- Kept the demonstration infrastructure intentionally small by excluding NAT
+  Gateway, AMP, ADOT, and Grafana while documenting the evaluated alternatives.
+- Regenerated the architecture graph for the production delivery path.
+
+### Security
+
+- Protected Terraform state with a customer-managed KMS key, automatic key
+  rotation, S3 Bucket Keys, versioning, and public-access blocking.
+- Restricted ECS ingress to the ALB, ALB egress to the dashboard port, and task
+  egress to VPC DNS and required HTTPS destinations.
+
 ## [0.2.0] - 2026-07-18
 
 ### Added

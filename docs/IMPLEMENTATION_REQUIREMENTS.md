@@ -2,8 +2,8 @@
 
 > **Implementation status — 0.2.0:** the API, dashboard, container builds,
 > GitHub Actions quality gates, SonarQube Cloud, Trivy, and Dependabot are
-> implemented. ECS/Fargate and Terraform remain documented follow-up work, not
-> delivered infrastructure.
+> implemented. Terraform, ECS/Fargate deployment, GitHub OIDC and immutable
+> image deployment are delivered as the production demonstration infrastructure.
 
 ## 1. Périmètre du produit
 
