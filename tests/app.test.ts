@@ -105,4 +105,35 @@ describe('HTTP routes', () => {
     expect(response.headers['content-type']).toContain('text/plain');
     expect(response.body).toContain('slo_watch_probe_success{target="portfolio"} 1');
   });
+
+  it('returns retained history for a configured target', async () => {
+    const { app, monitor } = createApp();
+    monitor.record('portfolio', {
+      latencyMs: 12,
+      statusCode: 200,
+      success: true,
+      timestamp: Date.now(),
+    });
+
+    const response = await app.inject('/api/targets/portfolio/history');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toMatchObject({
+      id: 'portfolio',
+      results: [{ latencyMs: 12, success: true }],
+      windowSeconds: 3600,
+    });
+  });
+
+  it('returns 404 for an unknown target history', async () => {
+    const { app } = createApp();
+
+    const response = await app.inject('/api/targets/unknown/history');
+
+    expect(response.statusCode).toBe(404);
+    expect(response.json()).toEqual({
+      error: 'Monitoring target not found.',
+      targetId: 'unknown',
+    });
+  });
 });

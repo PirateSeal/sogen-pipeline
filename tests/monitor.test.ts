@@ -107,6 +107,29 @@ describe('MonitorService', () => {
       failureCount: 1,
       successCount: 0,
     });
+    expect(monitor.history('portfolio')?.results).toHaveLength(1);
+  });
+
+  it('returns a copy of the retained history for a known target', () => {
+    const now = 3_000_000;
+    const monitor = new MonitorService(config, { now: () => now });
+    monitor.record('portfolio', {
+      latencyMs: 42,
+      statusCode: 200,
+      success: true,
+      timestamp: now,
+    });
+
+    const history = monitor.history('portfolio');
+    expect(history).toMatchObject({
+      id: 'portfolio',
+      results: [{ latencyMs: 42, success: true }],
+      url: 'https://tcousin.com',
+    });
+
+    history?.results.pop();
+    expect(monitor.history('portfolio')?.results).toHaveLength(1);
+    expect(monitor.history('unknown')).toBeNull();
   });
 
   it('records a timeout as a failed probe without following redirects', async () => {
